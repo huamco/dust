@@ -1,0 +1,55 @@
+<h1 mat-dialog-title><span *ngIf="!dust.id">Add</span><span *ngIf="dust.id">Edit</span> Dust</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="user-form">
+    <div fxLayout="column" class="form-field-outer">
+
+      <mat-form-field class="w-100">
+        <mat-select placeholder="장비위치" formControlName="locationID"
+                    (selectionChange)="selectedDustLocations()">
+          <mat-option *ngFor="let location of locations" [value]="location.id">
+            {{location.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="장비주소" formControlName="dustIPAddress">
+        <mat-error *ngIf="form.controls.dustIPAddress.errors?.required">IP Address is required</mat-error>
+        <input hidden formControlName="locationID">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="장비명" formControlName="dustName">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="장비타입" formControlName="dustType">
+      </mat-form-field>
+      <div><p>구성요소</p></div>
+      <section class="py-1">
+        <mat-checkbox class="mx-1" formControlName="m_wPower_value">전압</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="m_waCurrent_nowx10">전류</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="m_wAuto_puls_val">차압</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="m_byReserved">인버터</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="m_fParam_power">전력</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="m_wParam_runtime">가동시간</mat-checkbox>
+        <!--<mat-checkbox class="mx-1" formControlName="dustType">온도</mat-checkbox>
+        <mat-checkbox class="mx-1" formControlName="dustType">습도</mat-checkbox>-->
+      </section>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="버전" formControlName="version">
+      </mat-form-field>
+      <button md-mini-fab type="button" onclick="document.getElementById('fileToUpload').click()">
+        <label for="fileToUpload">upload Image</label>
+      </button>
+      <input id="fileToUpload" formControlName="image" type="file" (change)="fileChange($event)" style="display:none;">
+        <!--<input type="file" placeholder="이미지" formControlName="image">-->
+
+      <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+      <!--<mat-checkbox formControlName="isDeleted">Blocked</mat-checkbox>-->
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">
+    <span *ngIf="!dust.id">Save</span><span *ngIf="dust.id">Update</span>
+  </button>
+  <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

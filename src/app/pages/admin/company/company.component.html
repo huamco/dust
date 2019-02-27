@@ -1,0 +1,43 @@
+<div fxLayout="column">
+  <div class="flex-p">
+    <div fxLayout="row" style="margin-bottom: 5px;">
+      <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+        <mat-button-toggle value="add" (click)="openCompanyDialog(null)">
+          <mat-icon>person_add</mat-icon>
+        </mat-button-toggle>
+        <!--<mat-button-toggle value="search">
+          <mat-icon>search</mat-icon>
+        </mat-button-toggle>-->
+      </mat-button-toggle-group>
+    </div>
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Company Name </mat-header-cell>
+        <mat-cell *matCellDef="let company" (click)="openCompanyDialog(company)" style="cursor:default;"> {{company.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+        <mat-cell *matCellDef="let company"> {{company.address1}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tel">
+        <mat-header-cell *matHeaderCellDef> Telephone </mat-header-cell>
+        <mat-cell *matCellDef="let company"> {{company.tel}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isActive">
+        <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
+        <mat-cell *matCellDef="let company"> {{company.isActive}}
+          <!--<span *ngIf="company.isActive == 1">Active</span>
+          <span *ngIf="company.isActive != 1 || company.isActive == null">InActive</span>-->
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let company" (click)="deleteCompany(company)">
+          <mat-icon>delete_outline</mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let company; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

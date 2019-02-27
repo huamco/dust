@@ -1,0 +1,10 @@
+.fan-img {
+  img {
+    border-radius: 50%;
+    width: 40px;
+    height: 47px;
+    &.blocked {
+      opacity: 0.5;
+    }
+  }
+}

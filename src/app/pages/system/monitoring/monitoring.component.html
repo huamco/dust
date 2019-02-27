@@ -1,0 +1,50 @@
+<div fxLayout="column">
+  <div class="flex-p">
+    <mat-card>
+      <mat-card-header fxLayoutAlign="left left">
+        <div fxFlex="30">
+          <mat-card-subtitle><h3>모니터링 선택</h3></mat-card-subtitle>
+        </div>
+        <div fxFlex="70" style="margin-bottom: 5px;text-align: right;">
+          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;">저장</button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxFlex="100" style="margin-left: 10px; margin-bottom: 10px;">
+          <mat-radio-group>
+            <mat-radio-button value="1" class="mx-1">A Type</mat-radio-button>
+            <mat-radio-button value="2" class="mx-1">B Type</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </mat-card-content>
+      <mat-card-header fxLayoutAlign="left left">
+        <div fxFlex="30">
+          <mat-card-subtitle><h3>장비 구성요소 설정</h3></mat-card-subtitle>
+        </div>
+        <div fxFlex="70" style="margin-bottom: 5px;text-align: right;">
+          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;">저장</button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxFlex="100">
+          <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="dustIPAddress">
+              <mat-header-cell *matHeaderCellDef> 장비번호 </mat-header-cell>
+              <mat-cell *matCellDef="let dusts"> {{dusts.dustIPAddress}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="dustType">
+              <mat-header-cell *matHeaderCellDef> 구성 요소</mat-header-cell>
+              <mat-cell *matCellDef="let dusts"> {{dusts.dustType}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="img">
+              <mat-header-cell *matHeaderCellDef> 이미지 </mat-header-cell>
+              <mat-cell *matCellDef="let dusts"> {{dusts.img}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let dusts; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+       </mat-card-content>
+    </mat-card>
+  </div>
+</div>

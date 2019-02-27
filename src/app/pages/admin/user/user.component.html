@@ -1,0 +1,44 @@
+<div fxLayout="column">
+  <div class="flex-p">
+    <div fxLayout="row" style="margin-bottom: 5px;">
+      <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+        <mat-button-toggle value="add" (click)="openUserDialog(null)">
+          <mat-icon>person_add</mat-icon>
+        </mat-button-toggle>
+        <!--<mat-button-toggle value="search">
+          <mat-icon>search</mat-icon>
+        </mat-button-toggle>-->
+      </mat-button-toggle-group>
+    </div>
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef> UserID </mat-header-cell>
+        <mat-cell *matCellDef="let users"> {{users.username}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let users"> {{users.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="company">
+        <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+        <mat-cell *matCellDef="let users"> {{users.companyId}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tel">
+        <mat-header-cell *matHeaderCellDef> Tel </mat-header-cell>
+        <mat-cell *matCellDef="let users"> {{users.tel}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let users"> {{users.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let company" (click)="deleteUser(company)">
+          <mat-icon>delete_outline</mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let users; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

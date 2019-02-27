@@ -1,0 +1,41 @@
+<div *ngIf="'grid' == 'grid'" fxLayout="row wrap">
+    <div *ngFor="let dust of dusts | paginate: { itemsPerPage: 8, currentPage: page }; let i = index; " fxFlex="100" fxFlex.gt-md="25" fxFlex.md="35" class="flex-p">
+        <mat-card class="p-0">
+            <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center" style="height:30px;">
+                <h3 *ngIf="dust.dustName" class="user-name" (click)="goDustConfig(this.paramData[i],dust.dustName);">{{dust.dustName}} ({{dust.dustType}})</h3>
+                <h3 *ngIf="!dust.isActive" class="user-name">blocked</h3>
+            </div>
+            <div fxLayoutAlign="center center" style="margin-top:5px;">
+                <mat-radio-group *ngIf="m_byType[i] == 0" >
+                    <!--<mat-radio-button value="2" class="mx-1" [checked]="dust.dustType === 'Fan' ? true : false">FAN</mat-radio-button>-->
+                    <mat-radio-button value="2" class="mx-1" [checked]="this.pulsView == 1 ? true : false" onselect="setFanMode(currentDeviceData[i],'1','plus')">PULS</mat-radio-button>
+                    <mat-radio-button value="1" class="mx-1" [checked]="this.fan1View == 1 ? true : false" onselect="setFanMode(currentDeviceData[i],'1','fan')">FAN</mat-radio-button>
+                </mat-radio-group>
+                <mat-radio-group *ngIf="m_byType[i] == 1" >
+                    <!--<mat-radio-button value="2" class="mx-1" [checked]="dust.dustType === 'Fan' ? true : false">FAN</mat-radio-button>-->
+                    <mat-radio-button value="2" class="mx-1" [checked]="this.shkingView == 1 ? true : false" onclick="setFanMode(currentDeviceData[i],'1','shake')">SHAKING</mat-radio-button>
+                    <mat-radio-button value="1" class="mx-1" [checked]="this.fan1View == 1 ? true : false" onclick="setFanMode(currentDeviceData[i],'1','fan')" >FAN</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                <div fxFlex="100" fxLayout="column" class="user-details transition-2" [class.blocked]="dusts.isActive">
+                    <p fxLayout="row" fxLayoutAlign="center center">
+                        <mat-chip-list aria-orientation="horizontal">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wAuto_puls_val">차압 {{m_wAuto_puls_val[i]}} mmAq</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wPower_value">전압 {{m_wPower_value[i]}} V</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} kW/h</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wParam_runtime">가동시간 {{m_wParam_runtime[i]}} H</mat-chip>
+                        </mat-chip-list>
+                    </p>
+                </div>
+            </div>
+            <div class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <!--<img src="http://localhost:3000/img/{{dust.image}}" class="transition-2" style="width:350px;margin-right: 5px;">-->
+                <img *ngIf="dust.image" src="assets/img/users/DC1.gif" class="transition-2" style="width:350px;margin-right: 5px;">
+            </div>
+        </mat-card>
+    </div>
+</div>
+<app-dustb-view *ngIf="isViewConfig" [pushParamData]="pushParamData" (cancelViewConfig)="backDustConfig($event)" [paramDustName]="paramDustName"></app-dustb-view>

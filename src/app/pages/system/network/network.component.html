@@ -1,0 +1,53 @@
+<div fxLayout="column">
+  <div class="flex-p">
+    <mat-card>
+      <mat-card-header fxLayoutAlign="left left">
+        <div fxFlex="30">
+          <mat-card-subtitle><h3>중앙관리실 주소입력</h3></mat-card-subtitle>
+        </div>
+        <div fxFlex="70" style="margin-bottom: 5px;text-align: right;">
+          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;">저장</button>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="box-content">
+        <div fxFlex="100" style="margin-left: 10px; margin-bottom: 10px;">
+          <mat-form-field class="w-35">
+            <input matInput placeholder="IP Address" formControlName="ipAddress">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-header fxLayoutAlign="left left">
+        <div fxFlex="30">
+          <mat-card-subtitle><h3>통신상태</h3></mat-card-subtitle>
+        </div>
+        <div fxFlex="70" style="margin-bottom: 5px;text-align: right;">
+          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;">저장</button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxFlex="100">
+          <!--<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+              <mat-cell *matCellDef="let users"> {{users.name}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="userID">
+              <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
+              <mat-cell *matCellDef="let users"> {{users.userID}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="company">
+              <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+              <mat-cell *matCellDef="let users"> {{users.company}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="tel">
+              <mat-header-cell *matHeaderCellDef> Tel </mat-header-cell>
+              <mat-cell *matCellDef="let users"> {{users.tel}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let users; columns: displayedColumns;"></mat-row>
+          </mat-table>-->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

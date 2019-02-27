@@ -1,0 +1,81 @@
+<div fxLayout="row wrap" ngif="!isViewConfig">
+  <div fxFlex="100" fxFlex.gt-sm="60" class="flex-p" *ngIf="!isViewConfig">
+    <div *ngIf="'grid' == 'grid' && !isViewConfig" fxLayout="row wrap">
+      <div *ngFor="let dust of dusts; let i = index;" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" class="flex-p">
+        <mat-card class="p-0" style="shape-image-threshold: inherit; margin-top:-7px;">
+          <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center" style="height:30px;">
+            <h3 class="user-name"><a mat-button (click)="goConfig(currentDeviceData[i],paramDustName);">{{paramDustName}}</a></h3>
+          </div>
+          <div *ngIf="m_byType[i] == 0" fxLayoutAlign="center center" style="margin-top:5px;">
+            <div fxFlex="60" style="text-align: right;">
+              <div style="margin-bottom:-6px;">
+                <img *ngIf="this.fan1View == 1 && !alarmError" src="assets/img/users/fan2_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','fan')">
+                <img *ngIf="this.fan1View == 0 && !alarmError" src="assets/img/users/fan1_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','fan')">
+              </div>
+              <div>
+                <img *ngIf="this.pulsView == 1 && !alarmError" src="assets/img/users/filter2_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','puls')">
+                <img *ngIf="this.pulsView == 0 && !alarmError" src="assets/img/users/filter1_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','puls')">
+              </div>
+              <div *ngIf="isViewError" style="margin-top:10px;">
+                <img src="assets/img/users/networker_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
+              </div>
+              <div *ngIf="m_byaAlarm_arr[i] === '1'" style="margin-top:10px;">
+                <img src="assets/img/users/filterch_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
+              </div>
+              <div *ngIf="m_byaAlarm_arr[i] === '20'" style="margin-top:10px;">
+                <img src="assets/img/users/overcu_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
+              </div>
+              <div *ngIf="m_byaAlarm_arr[i] === '40'" style="margin-top:10px;">
+                <img src="assets/img/users/overdi_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
+              </div>
+              <div *ngIf="m_byaAlarm_arr[i] === '10' || m_byaAlarm_arr[i] === '20'" style="margin-top:10px;">
+                <img src="assets/img/users/balancecu_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
+              </div>
+            </div>
+            <div fxFlex="40" fxLayoutAlign="left left">
+              <div style="width:150px;margin-left:3px;" >
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_wPower_value" >전압 {{m_wPower_value[i]}} V</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_wAuto_puls_val">차압 {{m_wPressure[i]}} mmAq</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byReserved4[i]}}</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="m_byType[i] == 1" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+            <img  *ngIf="this.shkingView == 1" src="assets/img/users/shaking.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode1(currentDeviceData[i],'1','shake')">
+            <img  *ngIf="this.shkingView == 0" src="assets/img/users/shaking1.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode1(currentDeviceData[i],'0','shake')">
+            <img  *ngIf="this.shkingView == 2" src="assets/img/users/shaking2.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode1(currentDeviceData[i],'2','shake')">
+
+            <img *ngIf="this.fan1View == 1" src="assets/img/users/fan.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode1(currentDeviceData[i], '1','fan')">
+            <img *ngIf="this.fan1View == 0" src="assets/img/users/fan1.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode1(currentDeviceData[i], '0','fan')">
+            <img *ngIf="this.fan1View == 2" src="assets/img/users/fan2.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode1(currentDeviceData[i], '2','fan')">
+          </div>
+          <div style="display: block !important; text-align:right;">
+            <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="cancelDustDashboard()">Dashboard</button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <app-bottom-card *ngIf="!isViewConfig" [chartData1] = "chartData1" ></app-bottom-card>
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-sm="40" fxLayout="column">
+    <app-info-cards *ngIf="!isViewConfig" [chartData] = "chartData" ></app-info-cards>
+    <!--<div *ngFor="let chart of chartData1 ; let i = index; ">
+    {{chart.name}}
+    </div>-->
+    <app-todo *ngIf="!isViewConfig" [logs]="socketData"></app-todo>
+  </div>
+</div>
+<app-dashboard-dust-view *ngIf="isViewConfig" [pushParamData]="pushParamData" (cancelViewConfig)="backDustDashboard($event)" [paramDustName]="paramDustName"></app-dashboard-dust-view>

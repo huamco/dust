@@ -1,0 +1,102 @@
+<div *ngIf="'grid' == 'grid' && !isViewConfig" fxLayout="row wrap">
+    <div *ngFor="let dust of dusts | paginate: { itemsPerPage: 1, currentPage: page }; let i = index; " fxFlex="100" fxFlex.gt-md="70" fxFlex.md="70" class="flex-p">
+        <mat-card class="p-0" style="shape-image-threshold: inherit">
+            <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center" style="height:30px;">
+                <h3 *ngIf="dust.dustName" class="user-name"><a mat-button (click)="goDustConfig(this.paramData[i],dust.dustName);">{{dust.dustName}}</a> ({{dust.dustType}})</h3>
+            </div>
+            <div *ngIf="m_byaAlarm_arr[i] === '1'" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <img src="assets/img/users/filterch.gif" style="position: absolute; top: 40px; z-index:1;width:150px;height:200px;" (click)="imageChane(m_byaAlarm_arr[i])"/>
+            </div>
+            <div *ngIf="m_byaAlarm_arr[i] === '2'" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <img src="assets/img/users/overcu.gif" style="position: absolute; top: 40px; z-index:1;width:150px;height:200px;" (click)="imageChane(m_byaAlarm_arr[i])"/>
+            </div>
+            <div *ngIf="m_byaAlarm_arr[i] === '4'" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <img src="assets/img/users/overdi.gif" style="position: absolute; top: 40px; z-index:1;width:150px;height:200px;" (click)="imageChane(m_byaAlarm_arr[i])"/>
+            </div>
+            <div *ngIf="m_byaAlarm_arr[i] === '10'" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <img src="assets/img/users/balancecu.gif" style="position: absolute; top: 40px; z-index:1;width:150px;height:200px;" (click)="imageChane(m_byaAlarm_arr[i])"/>
+            </div>
+            <!--<div fxLayoutAlign="center center" style="margin-top:5px;">
+
+                <div style="width:80px;"></div>
+                <div style="width:150px;">
+                    <mat-chip-list class="mat-chip-list-stacked" style="">
+                        <mat-chip class="custom-chip" *ngIf="dust.m_wPower_value">전압 {{m_wPower_value[i]}} V</mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>-->
+            <div fxLayoutAlign="center center" style="margin-top:5px;">
+                <div style="margin-top:5px;width:220px;">
+                    <div style="width:150px;margin-left: 20px;" >
+                        <mat-chip-list class="mat-chip-list-stacked">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wPower_value" style="text-align: center">전압 {{m_wPower_value[i]}} V</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="fan-img">
+                        <img  *ngIf="this.pulsView == 1" src="assets/img/users/filter3.gif" class="transition-2" style="width:220px;height:330px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'1','plus')">
+                        <img  *ngIf="this.pulsView == 0" src="assets/img/users/filter1.gif" class="transition-2" style="width:220px;height:330px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'0','plus')">
+                        <img  *ngIf="this.pulsView == 2" src="assets/img/users/pulsing2.gif" class="transition-2" style="width:220px;height:330px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'2','plus')">
+                    </div>
+                    <div style="width:150px;margin-left: 20px;" >
+                        <mat-chip-list class="mat-chip-list-stacked">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wAuto_puls_val">차압 {{m_wAuto_puls_val[i]}} mmAq</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div style="width:150px;margin-left: 20px;margin-bottom: 5px; height: 32px;" >
+                        <mat-chip-list class="mat-chip-list-stacked" *ngIf="false">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+                <div style="margin-top:5px;width:220px;">
+                    <div style="width:150px;margin-left: 30px;" >
+                        <mat-chip-list class="mat-chip-list-stacked" style="display:inline; !important;">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="fan-img" >
+                        <img *ngIf="this.fan1View == 1" src="assets/img/users/fan3.gif" class="transition-2" style="width:220px;height:330px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i],'1','fan')">
+                        <img *ngIf="this.fan1View == 0" src="assets/img/users/fan1.gif" class="transition-2" style="width:220px;height:330px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i], '0','fan')">
+                        <img *ngIf="this.fan1View == 2" src="assets/img/users/fan2.gif" class="transition-2" style="width:220px;height:330px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i], '2','fan')">
+                    </div>
+                    <div style="width:150px;margin-left: 30px;" >
+                        <mat-chip-list class="mat-chip-list-stacked">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wAuto_puls_val">차압 {{m_wAuto_puls_val[i]}} mmAq</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div style="width:150px;margin-left: 30px;margin-bottom: 5px;" >
+                        <mat-chip-list class="mat-chip-list-stacked">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="m_byType[i] == 1" class="fan-img" fxLayoutAlign="center center" style="margin-top:5px;">
+                <img  *ngIf="this.shkingView == 1" src="assets/img/users/shaking.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'1','shake')">
+                <img  *ngIf="this.shkingView == 0" src="assets/img/users/shaking1.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'0','shake')">
+                <img  *ngIf="this.shkingView == 2" src="assets/img/users/shaking2.gif" class="transition-2" style="width:70px;margin-right: 5px;" (click)="setFanMode(currentDeviceData[i],'2','shake')">
+
+                <img *ngIf="this.fan1View == 1" src="assets/img/users/fan.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i], '1','fan')">
+                <img *ngIf="this.fan1View == 0" src="assets/img/users/fan1.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i], '0','fan')">
+                <img *ngIf="this.fan1View == 2" src="assets/img/users/fan2.gif" class="transition-2" style="width:70px;margin-left: 5px;" (click)="setFanMode(currentDeviceData[i], '2','fan')">
+            </div>
+            <!--<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                <div fxFlex="100" fxLayout="column" class="user-details transition-2" [class.blocked]="dusts.isActive">
+                    <p fxLayout="row" fxLayoutAlign="center center">
+                        <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wAuto_puls_val">차압 {{m_wAuto_puls_val[i]}} mmAq</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wPower_value">전압 {{m_wPower_value[i]}} V</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} kW/h</mat-chip>
+                            <mat-chip class="custom-chip" *ngIf="dust.m_wParam_runtime">가동시간 {{m_wParam_runtime[i]}} H</mat-chip>
+                        </mat-chip-list>
+                    </p>
+                </div>
+            </div>-->
+        </mat-card>
+    </div>
+</div>
+<app-dust-view *ngIf="isViewConfig" [pushParamData]="pushParamData" (cancelViewConfig)="backDustConfig($event)" [paramDustName]="paramDustName"></app-dust-view>

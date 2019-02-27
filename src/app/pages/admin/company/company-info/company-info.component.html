@@ -1,0 +1,51 @@
+<h1 mat-dialog-title><span *ngIf="!company.id">Add</span><span *ngIf="company.id">Edit</span> Company</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="user-form">
+    <div fxLayout="column" class="form-field-outer">
+    <mat-form-field class="w-100">
+      <mat-placeholder><mat-icon>person</mat-icon> Company name</mat-placeholder>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="form.controls.name.errors?.required">Company name is required</mat-error>
+      <mat-error *ngIf="form.controls.name.hasError('minlength')">Company name isn't long enough, minimum of 5 characters</mat-error>
+      <input hidden formControlName="id">
+    </mat-form-field>
+    <!--<mat-form-field class="w-100">
+      <input matInput placeholder="Company Code" formControlName="code">
+      <mat-error *ngIf="form.controls.code.errors?.required">Company code is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Serial No." formControlName="serialNo">
+    </mat-form-field>-->
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Address" formControlName="address1">
+      <mat-error *ngIf="form.controls.address1.errors?.required">Address is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Address1" formControlName="address2">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Zipcode" formControlName="zipcode1">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Telephone" formControlName="tel">
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Fax" formControlName="fax">
+    </mat-form-field>
+      <div><p>모니터링 선택</p></div>
+    <mat-radio-group style="padding-bottom: 5px;">
+      <mat-radio-button value="1" class="mx-1" [checked]="true" formControlName="monitoringType">A Type</mat-radio-button>
+      <mat-radio-button value="2" class="mx-1" formControlName="monitoringType">B Type</mat-radio-button>
+    </mat-radio-group>
+    <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+    <!--<mat-checkbox formControlName="isDeleted">Blocked</mat-checkbox>-->
+    <p *ngIf="company.id"><span>Registration date:</span> <i>{{company.createDate | date:"yyyy-MM-dd" }}</i></p>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">
+    <span *ngIf="!company.id">Save</span><span *ngIf="company.id">Update</span>
+  </button>
+  <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

@@ -1,0 +1,59 @@
+<h1 mat-dialog-title><span *ngIf="!user.id">Add</span><span *ngIf="user.id">Edit</span> user</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" class="user-form">
+    <div fxLayout="column" class="form-field-outer">
+      <mat-form-field class="w-100">
+        <mat-placeholder><mat-icon>person</mat-icon> UserID</mat-placeholder>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="form.controls.username.errors?.required">Username is required</mat-error>
+        <mat-error *ngIf="form.controls.username.hasError('minlength')">Username isn't long enough, minimum of 5 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-placeholder><mat-icon>vpn_key</mat-icon> Password</mat-placeholder>
+        <input matInput formControlName="password" required [type]="passwordHide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+        <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Company" formControlName="companyId"
+                    (selectionChange)="selectedCompanies()">
+          <mat-option *ngFor="let company of companies" [value]="company.id">
+            {{company.text}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls.companyId.errors?.required">Company is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Position" formControlName="position">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Telephone" formControlName="tel">
+      </mat-form-field>
+      <mat-checkbox formControlName="isAdmin">관리자</mat-checkbox>
+      <mat-checkbox formControlName="isManager">담당자</mat-checkbox>
+      <mat-checkbox formControlName="isWorker">직원용</mat-checkbox>
+      <mat-checkbox formControlName="isDemo">Demo</mat-checkbox>
+      <mat-form-field class="w-100">
+        <input matInput [matDatepicker]="startDate" placeholder="사용시작일" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput [matDatepicker]="endDate" placeholder="사용종료일" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user.id">Save</span><span *ngIf="user.id">Update</span></button>
+  <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>
