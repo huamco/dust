@@ -16,11 +16,11 @@ export class CompanyService {
         return this.http.post(this.url, company);
     }
 
-    updateCompany(company: Company) {
-        return this.http.put(this.url, company);
+    updateCompany(company: Company, id: number) {
+        return this.http.put(this.url + '/' + id, company);
     }
 
     deleteCompany(id: number) {
-        return this.http.delete(this.url + "/" + id);
+        return this.http.delete(this.url + '/' + id);
     }
 }

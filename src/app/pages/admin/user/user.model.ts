@@ -11,4 +11,6 @@ export class User {
   isManager: boolean;
   isWorker: boolean;
   isDemo: boolean;
+  startDate: Date;
+  endDate: Date;
 }

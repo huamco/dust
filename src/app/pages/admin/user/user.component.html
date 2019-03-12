@@ -33,8 +33,14 @@
       </ng-container>
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-        <mat-cell *matCellDef="let company" (click)="deleteUser(company)">
+        <mat-cell *matCellDef="let users" (click)="deleteUser(users)">
           <mat-icon>delete_outline</mat-icon>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let users" (click)="openUserDialog(users)">
+          <mat-icon>edit</mat-icon>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -2,6 +2,7 @@ import { Routes, RouterModule, PreloadAllModules  } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
 import { PagesComponent } from './pages/pages.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
     {
@@ -28,10 +29,12 @@ export const routes: Routes = [
             // { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             // { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } }
         ]
+
     },
+    // { path: 'pages', component : PagesComponent }
     /*{ path: 'landing', loadChildren: './pages/landing/landing.module#LandingModule' },*/
-    /*{ path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
-    { path: 'register', loadChildren: './pages/register/register.module#RegisterModule' },*/
+    // { path: '', loadChildren: './pages/login/login.module#LoginModule' },
+    // { path: 'register', loadChildren: './pages/register/register.module#RegisterModule' },
 /*    { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent }*/
 ];

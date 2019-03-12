@@ -1,14 +1,22 @@
 @import "../theme/styles/variables";
 
+.spacer {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+mat-sidenav-container {
+    overflow-y: auto;
+}
 .sidenav{
     width: $sidenav-width;
-    overflow: hidden; 
-    border: none !important;  
+    overflow: hidden;
+    border: none !important;
 }
 .horizontal-menu{
     padding: 0;
     position: relative;
-    z-index: 9;    
+    z-index: 9;
     height: 0;
     &.sticky{
         height: 0;
@@ -28,7 +36,7 @@
   top:$toolbar-height;
   bottom:0;
   left:0;
-  right:0;  
+  right:0;
   padding: $inner-sidenav-content-padding;
   min-height: calc(100% - (#{$toolbar-height} + #{$inner-sidenav-content-padding}*2));
 }
@@ -50,13 +58,13 @@
             width: 32px;
             height: 32px;
             padding: 0;
-            overflow: hidden;            
-            cursor: pointer;  
+            overflow: hidden;
+            cursor: pointer;
             .skin-secondary{
-                width: 0; 
-                height: 0; 
+                width: 0;
+                height: 0;
                 padding: 0;
-                border-bottom: 32px solid; 
+                border-bottom: 32px solid;
                 border-left: 32px solid transparent;
             }
             &.indigo-light{
@@ -141,18 +149,18 @@
     }
 }
 
-@-moz-keyframes spin { 
-    100% { 
-        -moz-transform: rotate(360deg); 
-    } 
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
 }
-@-webkit-keyframes spin { 
-    100% { 
-        -webkit-transform: rotate(360deg); 
-    } 
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
-@keyframes spin { 
-    100% { 
+@keyframes spin {
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -168,10 +176,10 @@
     opacity: .5;
     color: #fff;
     background-color: rgba(0,0,0,.75);
-    border-radius: 4px;    
+    border-radius: 4px;
     &:hover{
         opacity: 0.9;
-    }    
+    }
 }
 
 
@@ -191,7 +199,7 @@
                padding: 0 8px;
                width: 250px;
             }
-        }       
+        }
     }
 }
 

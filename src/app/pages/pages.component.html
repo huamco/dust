@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container flex>
     <mat-sidenav *ngIf="settings.menu == 'vertical'" [opened]="settings.sidenavIsOpened" [mode]="(settings.sidenavIsPinned) ? 'side' : 'over'" #sidenav class="sidenav mat-elevation-z6">
         <app-sidenav></app-sidenav>
     </mat-sidenav>
@@ -59,7 +59,6 @@
         <div #backToTop fxLayout="row" fxLayoutAlign="center center" class="back-to-top" (click)="scrollToTop()">
             <mat-icon>arrow_upward</mat-icon>
         </div>
-
     </mat-sidenav-content>
 
     <mat-sidenav #options position="end" class="options">
@@ -129,3 +128,10 @@
     </mat-sidenav>
 
 </mat-sidenav-container>
+<footer>
+    <mat-toolbar color='primary' style="min-height:35px !important; height:35px;">
+        <span style="background-color:green; padding-left: 10px;padding-right: 10px; font-size: x-small;">누적 총 가동시간 1007시간</span>
+        <span style="background-color:darkgreen; padding-left: 10px;padding-right: 10px; font-size: small;">월 사용전력 2014 kW/h</span>
+        <span style="background-color:blueviolet; padding-left: 10px;padding-right: 10px; font-size: small;">일 사용전력 204 kW/h</span>
+    </mat-toolbar>
+</footer>

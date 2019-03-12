@@ -14,7 +14,7 @@ import * as _ from 'lodash';
     providers: [ UserService, CompanyService ]
 })
 export class UserComponent implements OnInit {
-    public displayedColumns = ['username', 'name', 'company', 'tel', 'email', 'delete'];
+    public displayedColumns = ['username', 'name', 'company', 'tel', 'email', 'delete', 'edit'];
     public dataSource: any;
     public settings: Settings;
     public users: User[];
@@ -49,7 +49,10 @@ export class UserComponent implements OnInit {
         this.usersService.addUser(user).subscribe(user => this.getUsers());
     }
     public updateUser(user: User) {
-        this.usersService.updateUser(user).subscribe(user => this.getUsers());
+        user = Object.assign(user, {
+            companyId : user.companyId['text']
+        });
+        this.usersService.updateUser(user, user.id).subscribe(user => this.getUsers());
     }
     public deleteUser(user: User) {
         this.usersService.deleteUser(user.id).subscribe(user => this.getUsers());
@@ -76,6 +79,7 @@ export class UserComponent implements OnInit {
       }
     }
     public openUserDialog(user) {
+      console.log("user", user);
       this.dialogRef = this.dialog.open(UserinfoComponent, {
             data: user
         });

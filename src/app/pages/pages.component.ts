@@ -4,16 +4,17 @@ import { PerfectScrollbarDirective, PerfectScrollbarConfigInterface } from 'ngx-
 import { AppSettings } from '../app.settings';
 import { Settings } from '../app.settings.model';
 import { MenuService } from '../theme/components/menu/menu.service';
+import {DustService} from './system/dust-register/dust.service';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss'],
-  providers: [ MenuService ]
+  providers: [ MenuService, DustService ]
 })
-export class PagesComponent implements OnInit { 
+export class PagesComponent implements OnInit {
   @ViewChild('sidenav') sidenav:any;
-  @ViewChild('backToTop') backToTop:any;  
+  @ViewChild('backToTop') backToTop:any;
   @ViewChildren(PerfectScrollbarDirective) pss: QueryList<PerfectScrollbarDirective>;
   public settings:Settings;
   public menus = ['vertical', 'horizontal'];
@@ -24,44 +25,61 @@ export class PagesComponent implements OnInit {
   public lastScrollTop:number = 0;
   public showBackToTop:boolean = false;
   public toggleSearchBar:boolean = false;
-  private defaultMenu:string; //declared for return default menu when window resized 
+  private defaultMenu:string; //declared for return default menu when window resized
 
-  constructor(public appSettings:AppSettings, public router:Router, private menuService: MenuService){        
+  monthlyPower: any;
+
+  constructor(public appSettings:AppSettings,
+              public router:Router,
+              private menuService: MenuService,
+              public dustService: DustService){
     this.settings = this.appSettings.settings;
   }
-  
+
   ngOnInit() {
     if(window.innerWidth <= 768){
       this.settings.menu = 'vertical';
       this.settings.sidenavIsOpened = false;
       this.settings.sidenavIsPinned = false;
     }
-    this.menuOption = this.settings.menu; 
-    this.menuTypeOption = this.settings.menuType; 
+    this.menuOption = this.settings.menu;
+    this.menuTypeOption = this.settings.menuType;
     this.defaultMenu = this.settings.menu;
+    this.getMonthlyPower();
+  }
+
+  getMonthlyPower() {
+      this.dustService.getMonthlyPower().subscribe(res => {
+          res.forEach((item) => {
+            this.monthlyPower = item.data.m_fParam_power;
+          });
+      });
+      setTimeout(() => {
+          //this.getMonthlyPower();
+      }, 5000);
   }
 
   ngAfterViewInit(){
     setTimeout(() => { this.settings.loadingSpinner = false }, 300);
-    this.backToTop.nativeElement.style.display = 'none';  
+    this.backToTop.nativeElement.style.display = 'none';
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) { 
+      if (event instanceof NavigationEnd) {
         if(!this.settings.sidenavIsPinned){
-          this.sidenav.close(); 
-        }      
+          this.sidenav.close();
+        }
         if(window.innerWidth <= 768){
-          this.sidenav.close(); 
-        } 
-      }                
+          this.sidenav.close();
+        }
+      }
     });
     if(this.settings.menu == "vertical")
       this.menuService.expandActiveSubMenu(this.menuService.getVerticalMenuItems());
   }
 
   public chooseMenu(){
-    this.settings.menu = this.menuOption; 
+    this.settings.menu = this.menuOption;
     this.defaultMenu = this.menuOption;
-    this.router.navigate(['/']); 
+    this.router.navigate(['/']);
   }
 
   public chooseMenuType(){
@@ -69,23 +87,23 @@ export class PagesComponent implements OnInit {
   }
 
   public changeTheme(theme){
-    this.settings.theme = theme;       
+    this.settings.theme = theme;
   }
-   
+
   public toggleSidenav(){
     this.sidenav.toggle();
   }
 
-  public onPsScrollY(event){   
+  public onPsScrollY(event){
     (event.target.scrollTop > 300) ? this.backToTop.nativeElement.style.display = 'flex' : this.backToTop.nativeElement.style.display = 'none';
     if(this.settings.menu == 'horizontal'){
       if(this.settings.fixedHeader){
-        var currentScrollTop = (event.target.scrollTop > 56) ? event.target.scrollTop : 0;   
+        var currentScrollTop = (event.target.scrollTop > 56) ? event.target.scrollTop : 0;
         (currentScrollTop > this.lastScrollTop) ? this.isStickyMenu = true : this.isStickyMenu = false;
-        this.lastScrollTop = currentScrollTop; 
-      } 
+        this.lastScrollTop = currentScrollTop;
+      }
       else{
-        (event.target.scrollTop > 56) ? this.isStickyMenu = true : this.isStickyMenu = false;  
+        (event.target.scrollTop > 56) ? this.isStickyMenu = true : this.isStickyMenu = false;
       }
     }
   }
@@ -97,7 +115,7 @@ export class PagesComponent implements OnInit {
       }
     });
   }
-  
+
 
   @HostListener('window:resize')
   public onWindowResize():void {

@@ -42,21 +42,10 @@ export class UserinfoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCompanies();
-        if (this.user) {
-            /*this.form.controls['id'].setValue(this.user.id);
-            this.form.controls['name'].setValue(this.user.name);
-            this.form.controls['address1'].setValue(this.user.address1);
-            this.form.controls['address2'].setValue(this.user.address2);
-            this.form.controls['zipcode1'].setValue(this.user.zipcode1);
-            this.form.controls['tel'].setValue(this.user.tel);
-            this.form.controls['fax'].setValue(this.user.fax);
-            this.form.controls['isActive'].setValue(this.user.isActive);*/
-            /*this.form.setValue(this.user);*/
-        }
-        else {
+        if (!this.user) {
             this.user = new User();
         }
+        this.getCompanies();
     }
 
     getCompanies() {
@@ -67,6 +56,31 @@ export class UserinfoComponent implements OnInit {
                     text: x.name
                 });
             });
+            if (this.user) {
+                this.form.controls['id'].setValue(this.user.id);
+                this.form.controls['username'].setValue(this.user.username);
+                this.form.controls['password'].setValue(this.user.password);
+                this.form.controls['name'].setValue(this.user.name);
+                this.form.controls['email'].setValue(this.user.email);
+                //this.form.controls['companyId'].setValue(this.user.companyId);
+                this.form.controls['tel'].setValue(this.user.tel);
+                this.form.controls['position'].setValue(this.user.position);
+                this.form.controls['isAdmin'].setValue(this.user.isAdmin);
+                this.form.controls['isManager'].setValue(this.user.isManager);
+                this.form.controls['isWorker'].setValue(this.user.isWorker);
+                this.form.controls['isDemo'].setValue(this.user.isDemo);
+                this.form.controls['startDate'].setValue(this.user.startDate);
+                this.form.controls['endDate'].setValue(this.user.endDate);
+                this.selectedCompany = this.user.companyId;
+                // this.form.setValue(this.user)
+                // this.selectedCompanies();
+               this.selectedCompany = this.companies.filter((c)=>{
+                    return c.text === this.user.companyId;
+                })[0];
+            }
+            // else {
+            //     this.user = new User();
+            // }
         });
     }
 

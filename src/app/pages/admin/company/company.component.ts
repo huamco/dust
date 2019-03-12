@@ -13,7 +13,7 @@ import {CompanyInfoComponent} from './company-info/company-info.component';
 })
 export class CompanyComponent implements OnInit {
 
-    public displayedColumns = ['name', 'address', 'tel', 'isActive', 'delete'];
+    public displayedColumns = ['name', 'address', 'tel', 'isActive', 'delete', 'edit'];
     public dataSource: any;
     public settings: Settings;
     public company: Company[];
@@ -37,7 +37,7 @@ export class CompanyComponent implements OnInit {
     }
     public updateCompany(company: Company) {
         console.log('updateCompany');
-        this.companyService.updateCompany(company).subscribe(company => this.getCompany());
+        this.companyService.updateCompany(company, company.id).subscribe(company => this.getCompany());
     }
     public deleteCompany(company: Company) {
         this.companyService.deleteCompany(company.id).subscribe(company => this.getCompany());

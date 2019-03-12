@@ -4,6 +4,7 @@
     left:0;
     right:0;
     bottom:0;
+    overflow-y: auto;
 }
 
 #app-spinner{
@@ -28,7 +29,7 @@
     transition: visibility 0.5s, opacity 0.3s linear;
     &.hide{
         visibility: hidden;
-        opacity: 0; 
+        opacity: 0;
     }
     h4{
         margin-top: 10px;

@@ -17,11 +17,11 @@ export class UserService {
         return this.http.post(this.url, user);
     }
 
-    updateUser(user:User){
-        return this.http.put(this.url, user);
+    updateUser(user: User, id: number){
+        return this.http.put(this.url + '/' + id, user);
     }
 
     deleteUser(id: number) {
-        return this.http.delete(this.url + "/" + id);
+        return this.http.delete(this.url + '/' + id);
     }
 }

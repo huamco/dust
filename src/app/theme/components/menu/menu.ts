@@ -2,9 +2,9 @@ import { Menu } from './menu.model';
 
 export const verticalMenuItems = [
     new Menu (1, 'Dashboard', '/dashboard', null, 'dashboard', null, false, 0),
-    new Menu (2, '모니터링', null, null, 'web_asset', null, true, 0),
-    new Menu (3, 'TYPE A', '/type-a', null, 'picture_in_picture', null, false, 2),
-    new Menu (4, 'TYPE B', '/type-b', null, 'picture_in_picture_alt', null, false, 2),
+    //new Menu (2, '모니터링', null, null, 'web_asset', null, true, 0),
+    //new Menu (3, 'TYPE A', '/type-a', null, 'picture_in_picture', null, false, 2),
+    //new Menu (4, 'TYPE B', '/type-b', null, 'picture_in_picture_alt', null, false, 2),
     new Menu (5, '알람내역', '/alarm', null, 'notifications', null, false, 0),
     new Menu (6, '장비검색', '/m-search', null, 'search', null, false, 0),
     new Menu (7, '시스템설정', null, null, 'settings', null, true, 0),

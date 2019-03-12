@@ -22,9 +22,8 @@
         <input matInput placeholder="Email" formControlName="email">
       </mat-form-field>
       <mat-form-field class="w-100">
-        <mat-select placeholder="Company" formControlName="companyId"
-                    (selectionChange)="selectedCompanies()">
-          <mat-option *ngFor="let company of companies" [value]="company.id">
+        <mat-select placeholder="Company" [(ngModel)]="selectedCompany" formControlName="companyId">
+          <mat-option *ngFor="let company of companies" [value]="company">
             {{company.text}}
           </mat-option>
         </mat-select>

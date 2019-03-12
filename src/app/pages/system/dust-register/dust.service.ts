@@ -44,4 +44,8 @@ export class DustService {
          return this.http.get<any>('http://localhost:3300/packetData/getElectData');
     }
 
+    getMonthlyPower(): Observable<any> {
+        return this.http.get<any>('http://localhost:3300/packetData/getMonthlyPower');
+    }
+
 }

@@ -33,6 +33,7 @@ import { MessagesComponent } from './theme/components/messages/messages.componen
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import {SystemModule} from './pages/system/system.module';
 import {HttpClientModule} from '@angular/common/http';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import {HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
     PagesComponent,
+    LoginComponent,
     SidenavComponent,
     VerticalMenuComponent,
     HorizontalMenuComponent,
