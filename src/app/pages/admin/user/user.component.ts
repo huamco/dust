@@ -46,6 +46,9 @@ export class UserComponent implements OnInit {
         });
     }
     public addUser(user: User) {
+        user = Object.assign(user, {
+            companyId : user.companyId['text']
+        });
         this.usersService.addUser(user).subscribe(user => this.getUsers());
     }
     public updateUser(user: User) {

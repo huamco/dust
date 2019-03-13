@@ -40,8 +40,7 @@ export class LocationInfoComponent implements OnInit {
           m_waCurrent_nowx10: 0,
           m_byReserved: 0,
           m_fParam_power: 0,
-          m_wParam_runtime: 0,
-          image: null,
+          m_wParam_runtime: 0
       });
   }
 
@@ -76,7 +75,6 @@ export class LocationInfoComponent implements OnInit {
           this.form.controls['m_byReserved'].setValue(this.dust.m_byReserved);
           this.form.controls['m_fParam_power'].setValue(this.dust.m_fParam_power);
           this.form.controls['m_wParam_runtime'].setValue(this.dust.m_wParam_runtime);
-          this.form.controls['image'].setValue(this.dust.image);
       }
       else {
           this.dust = new Dust();
@@ -86,7 +84,7 @@ export class LocationInfoComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    fileChange($event) :void {
+    /*fileChange($event) :void {
         var fd = new FormData();
         const file: File = $event.target.files[0];
         fd.append('image', file);
@@ -95,6 +93,6 @@ export class LocationInfoComponent implements OnInit {
             console.log('asdfasdfsd');
         });
         this.form.controls['image'].setValue(file.name);
-    }
+    }*/
 
 }

@@ -9,7 +9,6 @@ export class DustLocationService {
     constructor(public http: HttpClient) { }
 
     getLocations(): Observable<DustLocation[]> {
-        console.log('getLocations');
         return this.http.get<DustLocation[]>(this.url);
     }
 

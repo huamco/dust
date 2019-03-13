@@ -20,12 +20,18 @@
                             <img  src="assets/img/users/networker.gif" class="transition-2" style="width:170px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','puls')">
                         </div>
                         <div *ngIf="m_byaAlarm_arr[i] === '1'" class="fan-img" style="margin-top:10px;">
+                            <img *ngIf="this.fan1View == 1 && !alarmError" src="assets/img/users/fan2.gif" class="transition-2" style="width:170px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','fan')">
+                            <img *ngIf="this.fan1View == 0 && !alarmError" src="assets/img/users/fan1.gif" class="transition-2" style="width:170px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','fan')">
+
                             <img src="assets/img/users/filterch.gif" class="transition-2" style="width:170px;margin-left: 20px;"/>
                         </div>
                         <div *ngIf="m_byaAlarm_arr[i] === '20'" class="fan-img" style="margin-top:10px;">
                             <img src="assets/img/users/overcu.gif" class="transition-2" style="width:170px;margin-left: 20px;"/>
                         </div>
                         <div *ngIf="m_byaAlarm_arr[i] === '40'" class="fan-img" style="margin-top:10px;">
+                            <img *ngIf="this.fan1View == 1 && !alarmError" src="assets/img/users/fan2.gif" class="transition-2" style="width:170px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','fan')">
+                            <img *ngIf="this.fan1View == 0 && !alarmError" src="assets/img/users/fan1.gif" class="transition-2" style="width:170px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','fan')">
+
                             <img src="assets/img/users/overdi.gif" class="transition-2" style="width:170px;margin-left: 20px;"/>
                         </div>
                         <div *ngIf="m_byaAlarm_arr[i] === '10' || m_byaAlarm_arr[i] === '20'" class="fan-img" style="margin-top:10px;">
@@ -48,13 +54,25 @@
                                 </mat-chip-list>
                             </div>
                             <div style="width:150px;margin-left: 25px;margin-bottom: 5px;" >
+                                <mat-chip-list class="mat-chip-list-stacked">
+                                    <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} A</mat-chip>
+                                </mat-chip-list>
+                            </div>
+                            <div style="width:150px;margin-left: 25px;margin-bottom: 5px;" >
                                 <mat-chip-list class="mat-chip-list-stacked"><!--m_byValve_sel-->
-                                    <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byReserved4[i]}} </mat-chip>
+                                    <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byValve_sel[i]}} </mat-chip>
                                 </mat-chip-list>
                             </div>
                             <div style="width:150px;margin-left: 25px;margin-bottom: 5px;" >
                                 <mat-chip-list class="mat-chip-list-stacked">
                                     <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                                </mat-chip-list>
+                            </div>
+                            <div style="width:150px;margin-left: 25px;margin-bottom: 5px;" >
+                                <mat-chip-list class="mat-chip-list-stacked">
+                                    <mat-chip class="custom-chip" *ngIf="m_byType[i] === '0'">PANNEL</mat-chip>
+                                    <mat-chip class="custom-chip" *ngIf="m_byType[i] === '1'">LINK</mat-chip>
+                                    <mat-chip class="custom-chip" *ngIf="m_byType[i] === '2'">REMOTE</mat-chip>
                                 </mat-chip-list>
                             </div>
                         </div>

@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList } from '@angular/core';
+import {Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { PerfectScrollbarDirective, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppSettings } from '../app.settings';
 import { Settings } from '../app.settings.model';
 import { MenuService } from '../theme/components/menu/menu.service';
+import { LoginService} from './login/login.service';
 import {DustService} from './system/dust-register/dust.service';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss'],
-  providers: [ MenuService, DustService ]
+  providers: [ MenuService, DustService, LoginService ]
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav:any;
   @ViewChild('backToTop') backToTop:any;
   @ViewChildren(PerfectScrollbarDirective) pss: QueryList<PerfectScrollbarDirective>;
@@ -32,7 +33,8 @@ export class PagesComponent implements OnInit {
   constructor(public appSettings:AppSettings,
               public router:Router,
               private menuService: MenuService,
-              public dustService: DustService){
+              public dustService: DustService,
+              public loginService: LoginService){
     this.settings = this.appSettings.settings;
   }
 
@@ -44,7 +46,7 @@ export class PagesComponent implements OnInit {
     }
     this.menuOption = this.settings.menu;
     this.menuTypeOption = this.settings.menuType;
-    this.defaultMenu = this.settings.menu;
+    this.defaultMenu = this.settings.menu;;
     this.getMonthlyPower();
   }
 

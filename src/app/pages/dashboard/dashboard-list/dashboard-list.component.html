@@ -20,12 +20,17 @@
                 <img src="assets/img/users/networker_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
               </div>
               <div *ngIf="m_byaAlarm_arr[i] === '1'" style="margin-top:10px;">
+                <img *ngIf="this.fan1View == 1 && !alarmError" src="assets/img/users/fan2_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','fan')">
+                <img *ngIf="this.fan1View == 0 && !alarmError" src="assets/img/users/fan1_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','fan')">
                 <img src="assets/img/users/filterch_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
               </div>
               <div *ngIf="m_byaAlarm_arr[i] === '20'" style="margin-top:10px;">
                 <img src="assets/img/users/overcu_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
               </div>
               <div *ngIf="m_byaAlarm_arr[i] === '40'" style="margin-top:10px;">
+                <img *ngIf="this.fan1View == 1 && !alarmError" src="assets/img/users/fan2_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'1','fan')">
+                <img *ngIf="this.fan1View == 0 && !alarmError" src="assets/img/users/fan1_detail.gif" class="transition-2" style="width:250px;margin-left: 20px;" (click)="setFanMode1(currentDeviceData[i],'0','fan')">
+
                 <img src="assets/img/users/overdi_dt.gif" class="transition-2" style="width:250px;margin-left: 20px;"/>
               </div>
               <div *ngIf="m_byaAlarm_arr[i] === '10' || m_byaAlarm_arr[i] === '20'" style="margin-top:10px;">
@@ -44,10 +49,18 @@
                   <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
                 </mat-chip-list>
                 <mat-chip-list class="mat-chip-list-stacked">
-                  <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byReserved4[i]}}</mat-chip>
+                  <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} A</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byValve_sel [i]}}</mat-chip>
                 </mat-chip-list>
                 <mat-chip-list class="mat-chip-list-stacked">
                   <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">인버터 {{m_byReserved[i]}} %</mat-chip>
+                </mat-chip-list>
+                <mat-chip-list class="mat-chip-list-stacked">
+                  <mat-chip class="custom-chip" *ngIf="m_byType[i] === '0'">PANNEL</mat-chip>
+                  <mat-chip class="custom-chip" *ngIf="m_byType[i] === '1'">LINK</mat-chip>
+                  <mat-chip class="custom-chip" *ngIf="m_byType[i] === '2'">REMOTE</mat-chip>
                 </mat-chip-list>
               </div>
             </div>

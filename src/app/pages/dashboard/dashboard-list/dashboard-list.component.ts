@@ -80,6 +80,7 @@ export class DashboardListComponent implements OnInit {
     m_wM_status: any;
     m_wPressure: any;
     m_byMotor_num: any;
+    m_byValve_sel: any;
     currentDeviceData: any;
     m_byaAlarm_history: any = [];
     m_byaAlarm_arr: any = [];
@@ -115,6 +116,7 @@ export class DashboardListComponent implements OnInit {
               this.currentDeviceData = [];
               this.m_wPressure = [];
               this.m_byMotor_num = [];
+              this.m_byValve_sel = [];
               // console.log('this.paramData.length===>',this.paramData.length);
 
               for(var i=0; i<this.paramData.length; i++) {
@@ -184,7 +186,7 @@ export class DashboardListComponent implements OnInit {
                       this.m_wParam_runtime.push(JSON.parse(this.originalData)['m_wParam_runtime']);
                       this.m_byType.push(JSON.parse(JSON.stringify(this.s_structData))['m_byType']);
                       this.m_byMotor_num.push(JSON.parse(JSON.stringify(this.s_structData))['m_byMotor_num']);
-
+                      this.m_byValve_sel.push(JSON.parse(JSON.stringify(this.r_structData))['m_byValve_sel']);
                       this.m_wPressure.push(JSON.parse(this.originalData)['m_wPressure']);
                       //console.log('iiiii::::::', this.m_wPressure);
                       this.setWsMode(this.m_wS_mode[i], this.m_wM_status[i], this.m_byType[i],this.m_byMotor_num[i]);

@@ -50,13 +50,11 @@ export class DustRegisterComponent implements OnInit {
         this.dusts = null; //for show spinner each time
         this.dustService.getDusts().subscribe(dusts => {
             this.dusts = dusts;
-            console.log(this.dusts);
             this.dataSource1 = new MatTableDataSource<Dust>(this.dusts);
-            console.log('id==>',id);
             if(id) {
-                this.filter_dusts = this.dusts.filter(x => id === x.locationID);
+                this.filter_dusts = this.dusts.filter(x => id.toString() === x.locationID);
                 this.dataSource1 = new MatTableDataSource<Dust>(this.filter_dusts);
-                console.log(this.filter_dusts);
+                //console.log(this.filter_dusts);
                 /*console.log(dusts);*/
             }
         });

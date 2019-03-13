@@ -16,10 +16,12 @@
             <div fxFlex="100" fxLayout="row" >
               <p fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="공급전압" formControlName="m_wPower_value">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="타입" formControlName="m_byMode">
+                  <!--<input matInput placeholder="타입" formControlName="m_byMode">-->
+                  <mat-select placeholder="타입" formControlName="m_byMode">
+                    <mat-option [value]="0">PANNEL</mat-option>
+                    <mat-option [value]="1">LINK</mat-option>
+                    <mat-option [value]="2">REMOTE</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="동작차압" formControlName="m_wAuto_puls_val">
@@ -28,36 +30,13 @@
                   <input matInput placeholder="필터교체" formControlName="m_wTime_change_fileter">
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="차압조정" formControlName="m_nRev_pressure">
-                </mat-form-field>
-                <mat-form-field class="w-50">
                   <input matInput placeholder="과전류" formControlName="m_byOver_current">
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="EOCR지연" formControlName="m_byDelay_eocr">
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="CT1조정(0.1A)" readonly formControlName="m_nRev_ct1">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT2조정(0.1A)" readonly formControlName="m_nRev_ct2">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT3조정(0.1A)" readonly formControlName="m_nRev_ct3">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT4조정(0.1A)" readonly formControlName="m_nRev_ct4">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput>
-                </mat-form-field>
-              </p>
-              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
-                <mat-form-field class="w-50">
                   <input matInput placeholder="과차압" formControlName="m_wAlarm_pressure">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="전류 DIFF" formControlName="m_byAlarm_current_diff">
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="펄스시간" formControlName="m_wPuls_open_time">
@@ -69,16 +48,12 @@
                   <input matInput placeholder="펄스선택" formControlName="m_byPuls_sel">
                 </mat-form-field>
                 <mat-form-field class="w-50">
+                  <input matInput>
+                </mat-form-field>
+              </p>
+              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
+                <mat-form-field class="w-50">
                   <input matInput placeholder="밸브선택" formControlName="m_byValve_sel">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="펄스 DIFF" formControlName="m_byPuls_diff">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="다기능 접점" formControlName="m_byMulti_in">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="전원구조" formControlName="m_byPower_phase">
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="인버터 출력" formControlName="m_byInverter_out">
@@ -87,12 +62,11 @@
                   <input matInput placeholder="A/O설정" formControlName="m_wAnalog_out">
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="수동펄싱 선택" formControlName="m_byManual_hauto_puls">
-                </mat-form-field>
-              </p>
-              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="알람출력" formControlName="m_byAlarm_relay">
+                  <!--<input matInput placeholder="수동펄싱 선택" formControlName="m_byManual_hauto_puls">-->
+                  <mat-select placeholder="수동펄싱 선택" formControlName="m_byManual_hauto_puls">
+                    <mat-option [value]="0">MANUAL</mat-option>
+                    <mat-option [value]="1">AUTO</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="팬동작 시간" formControlName="m_byFan_on_time">
@@ -107,26 +81,18 @@
                   <input matInput placeholder="모터갯수" formControlName="m_byMotor_num">
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="CT1 보정" formControlName="m_wCali_ct1">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT2 보정" formControlName="m_wCali_ct2">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT3 보정" formControlName="m_wCali_ct3">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="CT4 보정" formControlName="m_wCali_ct4">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="차압보정" formControlName="m_wCali_pressure">
-                </mat-form-field>
-                <mat-form-field class="w-50">
-                  <input matInput placeholder="언어" formControlName="m_byLanguage">
+                  <!--<input matInput placeholder="언어" formControlName="m_byLanguage">-->
+                  <mat-select placeholder="언어" formControlName="m_byLanguage">
+                    <mat-option [value]="0">KOREAN</mat-option>
+                    <mat-option [value]="1">ENGLISH</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="비밀번호" formControlName="m_wPassword">
                 </mat-form-field>
+              </p>
+              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
+
               </p>
             </div>
           </div>

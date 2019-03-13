@@ -32,41 +32,41 @@ export class DashboardDustViewComponent implements OnInit {
                 public dustClientService: DustClientService) {
         this.form = this.fb.group({
             id: null,
-            m_wPower_value: null,
             m_byMode: null,
             m_wAuto_puls_val: null,
             m_wTime_change_fileter: null,
-            m_wCali_pressure: null,
-            m_nRev_pressure: null,
             m_byOver_current: null,
             m_byDelay_eocr: null,
-            m_wCali_ct1: null,
-            m_wCali_ct2: null,
-            m_wCali_ct3: null,
-            m_wCali_ct4: null,
             m_wAlarm_pressure: null,
-            m_byAlarm_current_diff: null,
             m_wPuls_open_time: null,
             m_wPuls_delay_time: null,
             m_byPuls_sel: null,
             m_byValve_sel: null,
-            m_byPuls_diff: null,
-            m_byMulti_in: null,
-            m_byPower_phase: null,
             m_byInverter_out: null,
             m_wAnalog_out: null,
             m_byManual_hauto_puls: null,
-            m_byAlarm_relay: null,
             m_byFan_on_time: null,
             m_byManual_puls_cycle: null,
             m_byType: null,
             m_byMotor_num: null,
+            m_wPassword: null
+            /*m_wPower_value: null,
+            m_wCali_pressure: null,
+            m_nRev_pressure: null,
+            m_wCali_ct1: null,
+            m_wCali_ct2: null,
+            m_wCali_ct3: null,
+            m_wCali_ct4: null,
+            m_byAlarm_current_diff: null,
+            m_byPuls_diff: null,
+            m_byMulti_in: null,
+            m_byPower_phase: null,
+            m_byLanguage: null,
+            m_byAlarm_relay: null,
             m_nRev_ct1: null,
             m_nRev_ct2: null,
             m_nRev_ct3: null,
-            m_nRev_ct4: null,
-            m_byLanguage: null,
-            m_wPassword: null
+            m_nRev_ct4: null,*/
         });
         /* this.dustClientService.getClient().subscribe(d =>{
                  console.log('ddddd=>', d);
@@ -83,7 +83,6 @@ export class DashboardDustViewComponent implements OnInit {
         this.r_structData = JSON.parse(this.originalData)['m_stRunParam'];
         this.s_structData = JSON.parse(this.originalData)['m_stSysParam'];
 
-        this.form.controls['m_wPower_value'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wPower_value']);
         if (JSON.parse(JSON.stringify(this.r_structData))['m_byMode'] === '0') {
             this.form.controls['m_byMode'].setValue('PANNEL');
         } else if (JSON.parse(JSON.stringify(this.r_structData))['m_byMode'].value === '1') {
@@ -93,6 +92,7 @@ export class DashboardDustViewComponent implements OnInit {
         }
         //this.form.controls['m_byMode'].setValue(JSON.parse(JSON.stringify(this.r_structData))['m_byMode']);
 
+        this.form.controls['m_wPower_value'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wPower_value']);
         this.form.controls['m_wAuto_puls_val'].setValue(JSON.parse(JSON.stringify(this.r_structData))['m_wAuto_puls_val']);
         this.form.controls['m_wTime_change_fileter'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wTime_change_fileter']);
         this.form.controls['m_wCali_pressure'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wCali_pressure']);

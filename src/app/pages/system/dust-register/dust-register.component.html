@@ -13,7 +13,7 @@
         <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="location">
             <mat-header-cell *matHeaderCellDef> 장비위치 </mat-header-cell>
-            <mat-cell *matCellDef="let dustLocations" (click)="showDustList(dustLocations.location)"> {{dustLocations.location}} </mat-cell>
+            <mat-cell *matCellDef="let dustLocations" (click)="showDustList(dustLocations.id)"> {{dustLocations.location}} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="count">
             <mat-header-cell *matHeaderCellDef> 갯수 </mat-header-cell>
