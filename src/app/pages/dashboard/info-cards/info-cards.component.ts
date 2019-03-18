@@ -48,10 +48,32 @@ export class InfoCardsComponent implements OnInit, OnDestroy {
             this.getSocketData();
         }, 10000);*/
         this.getSocketData();
+        //this.getDailyPowerData();
         //this.setData();
     }
 
     getSocketData() {
+        this.products = products;
+        // this.orders[0].series.push(this.chartData);
+        //console.log('chartData==>', this.chartData);
+        if (this.chartData.length) {
+            this.orders[0].series = [];
+            for (let i = 1; i < this.chartData.length; i++) {
+                let item = this.chartData[i];
+                this.orders[0].series.push({"name": item['name'], "value":item['value']});
+            }
+            setTimeout(() => this.orders = [...orders] );
+        }
+        /*for (let i = 1; i < 20; i++) {
+            this.orders[0].series.push({"name": 1980+i, "value": Math.ceil(Math.random() * 1000000)});
+        }*/
+
+        setTimeout(() => {
+            this.getSocketData();
+        }, 2000);
+    }
+
+    public getDailyPowerData() {
         this.orders = orders;
         // this.orders[0].series.push(this.chartData);
         //console.log('chartData==>', this.chartData);
@@ -71,6 +93,7 @@ export class InfoCardsComponent implements OnInit, OnDestroy {
             this.getSocketData();
         }, 2000);
     }
+
     public onSelect(event) {
         console.log('event:', event);
     }

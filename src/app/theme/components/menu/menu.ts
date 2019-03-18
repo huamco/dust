@@ -10,7 +10,7 @@ export const verticalMenuItems = [
     new Menu (7, '시스템설정', null, null, 'settings', null, true, 0,3),
     new Menu (8, '장비등록 및 배치', '/pages/system/dust-register', null, 'dashboard', null, false, 7,3),
     //new Menu (9, '모니터링 및 설정', '/system/monitoring', null, 'web_asset', null, false, 7),
-    new Menu (10, '네트워크', '/pages/system/network', null, 'perm_data_setting', null, false, 7,3),
+    //new Menu (10, '네트워크', '/pages/system/network', null, 'perm_data_setting', null, false, 7,3),
     new Menu (11, 'Admin', null, null, 'settings_applications', null, true, 0,3),
     new Menu (12, 'Users', '/pages/admin/users', null, 'person', null, false, 11,3),
     new Menu (13, 'Company', '/pages/admin/company', null, 'domain', null, false, 11,3)

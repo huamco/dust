@@ -34,6 +34,7 @@ import { UserMenuComponent } from './theme/components/user-menu/user-menu.compon
 import {SystemModule} from './pages/system/system.module';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
+import { DialogComponent } from './theme/components/dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -64,9 +65,11 @@ import { LoginComponent } from './pages/login/login.component';
     ApplicationsComponent,
     MessagesComponent,
     UserMenuComponent,
+    DialogComponent,
   ],
   entryComponents:[
-    VerticalMenuComponent
+    VerticalMenuComponent,
+    DialogComponent
   ],
   providers: [
     AppSettings,

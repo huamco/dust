@@ -29,6 +29,8 @@ export class PagesComponent implements OnInit, AfterViewInit {
   private defaultMenu:string; //declared for return default menu when window resized
 
   monthlyPower: any;
+  dailyPower: any;
+  totalhour: any;
 
   constructor(public appSettings:AppSettings,
               public router:Router,
@@ -47,19 +49,43 @@ export class PagesComponent implements OnInit, AfterViewInit {
     this.menuOption = this.settings.menu;
     this.menuTypeOption = this.settings.menuType;
     this.defaultMenu = this.settings.menu;;
-    this.getMonthlyPower();
+    // this.getMonthlyPowerSum();
+    // this.getDailyPowerSum();
+    //   this.getTotalHour();
   }
 
-  getMonthlyPower() {
-      this.dustService.getMonthlyPower().subscribe(res => {
+    getMonthlyPowerSum() {
+      this.dustService.getMonthlyPowerSum().subscribe(res => {
           res.forEach((item) => {
             this.monthlyPower = item.data.m_fParam_power;
           });
       });
       setTimeout(() => {
-          //this.getMonthlyPower();
+          //this.getMonthlyPowerSum();
       }, 5000);
   }
+
+    getDailyPowerSum() {
+        this.dustService.getDailyPowerSum().subscribe(res => {
+            res.forEach((item) => {
+                this.dailyPower = item.data.m_fParam_power;
+            });
+        });
+        setTimeout(() => {
+            //this.getDailyPowerSum();
+        }, 5000);
+    }
+
+    getTotalHour() {
+        this.dustService.getTotalHour().subscribe(res => {
+            res.forEach((item) => {
+                this.totalhour = item.data.m_fParam_power;
+            });
+        });
+        setTimeout(() => {
+            //this.getTotalHour();
+        }, 5000);
+    }
 
   ngAfterViewInit(){
     setTimeout(() => { this.settings.loadingSpinner = false }, 300);

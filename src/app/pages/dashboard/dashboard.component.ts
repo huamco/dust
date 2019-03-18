@@ -185,7 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
                       this.m_byReserved.push(JSON.parse(this.originalData)['m_byReserved'][3]);
                       this.m_byReserved4.push(JSON.parse(this.originalData)['m_byReserved'][4]);
-                      this.m_fParam_power.push(JSON.parse(this.originalData)['m_fParam_power']);
+                      this.m_fParam_power.push(JSON.parse(this.originalData)['m_fParam_power'].toFixed(2));
                       this.m_wS_mode.push(JSON.parse(this.originalData)['m_wS_mode']);
                       this.m_wM_status.push(JSON.parse(this.originalData)['m_wM_status']);
                       this.m_wParam_runtime.push(JSON.parse(this.originalData)['m_wParam_runtime']);
@@ -222,7 +222,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.connection.unsubscribe();
+        //this.connection.unsubscribe();
     }
 
     goDustConfig(param, dustName) {

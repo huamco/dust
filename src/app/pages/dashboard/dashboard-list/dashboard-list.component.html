@@ -49,7 +49,7 @@
                   <mat-chip class="custom-chip" *ngIf="dust.m_waCurrent_nowx10">전류 {{m_waCurrent_nowx10[i]}} A</mat-chip>
                 </mat-chip-list>
                 <mat-chip-list class="mat-chip-list-stacked">
-                  <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} A</mat-chip>
+                  <mat-chip class="custom-chip" *ngIf="dust.m_fParam_power">전력 {{m_fParam_power[i]}} kW/h</mat-chip>
                 </mat-chip-list>
                 <mat-chip-list class="mat-chip-list-stacked">
                   <mat-chip class="custom-chip" *ngIf="dust.m_byReserved">벨브 {{m_byValve_sel [i]}}</mat-chip>
@@ -92,3 +92,4 @@
   </div>
 </div>
 <app-dashboard-dust-view *ngIf="isViewConfig" [pushParamData]="pushParamData" (cancelViewConfig)="backDustDashboard($event)" [paramDustName]="paramDustName"></app-dashboard-dust-view>
+

@@ -2,15 +2,21 @@
   <div class="flex-p">
     <mat-card>
       <mat-card-content>
-        <mat-tab-group>
-          <mat-tab label="전체">
+        <mat-tab-group >
+          <mat-tab *ngFor="let dust of dusts; let i = index;"  label="{{dust.dustName}}">
             <div fxFlex="100">
-              <mat-table #table [dataSource]="dataSource1" class="mat-elevation-z8">
+              <mat-list>
+                <mat-list-item *ngFor="let d of dusts">
+                  <h4 matLine>{{d.dustName}}</h4>
+                  <p matLine> {{d.id}} </p>
+                </mat-list-item>
+              </mat-list>
+              <!--<mat-table #table [dataSource]="dataSource1" class="mat-elevation-z8">
                 <ng-container matColumnDef="dustName">
                   <mat-header-cell *matHeaderCellDef> 제품명 </mat-header-cell>
-                  <mat-cell *matCellDef="let dusts"> {{dusts.dustName}} </mat-cell>
+                  <mat-cell *matCellDef="let dust"> {{dust.dustName}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="alarmcontent">
+                &lt;!&ndash;<ng-container matColumnDef="alarmcontent">
                   <mat-header-cell *matHeaderCellDef> 알람 내용 </mat-header-cell>
                   <mat-cell *matCellDef="let dusts let i = index">
                     <span *ngIf="m_byaAlarm_arr[i] === '1'">
@@ -33,10 +39,10 @@
                 <ng-container matColumnDef="date">
                   <mat-header-cell *matHeaderCellDef> 발생 일시 </mat-header-cell>
                   <mat-cell *matCellDef="let dusts">  </mat-cell>
-                </ng-container>
+                </ng-container>&ndash;&gt;
                 <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
                 <mat-row *matRowDef="let dusts; columns: displayedColumns1;"></mat-row>
-              </mat-table>
+              </mat-table>-->
             </div>
           </mat-tab>
           <!--<mat-tab *ngFor="let dust of dusts | DustSearchPipe : dust.dustName" label="{{dust.dustName}}">

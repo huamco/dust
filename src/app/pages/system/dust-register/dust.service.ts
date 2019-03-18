@@ -31,6 +31,10 @@ export class DustService {
         return this.http.delete(this.url + '/' + id);
     }
 
+    getDustAlarmList() {
+        return this.http.get<any>('http://localhost:3300/packetData/getAlarmList');
+    }
+
     addDustConfig(dustConfig: DustConfig) {
         console.log('addDustConfig');
         return this.http.post(this.url + '/dust-config', dustConfig);
@@ -46,6 +50,22 @@ export class DustService {
 
     getMonthlyPower(): Observable<any> {
         return this.http.get<any>('http://localhost:3300/packetData/getMonthlyPower');
+    }
+
+    getDailyPower(): Observable<any> {
+        return this.http.get<any>('http://localhost:3300/packetData/getDailyPower');
+    }
+
+    getMonthlyPowerSum(): Observable<any> {
+        return this.http.get<any>('http://localhost:3300/packetData/getMonthlyPowerSum');
+    }
+
+    getDailyPowerSum(): Observable<any> {
+        return this.http.get<any>('http://localhost:3300/packetData/getDailyPowerSum');
+    }
+
+    getTotalHour(): Observable<any> {
+        return this.http.get<any>('http://localhost:3300/packetData/getTotalHour');
     }
 
 }

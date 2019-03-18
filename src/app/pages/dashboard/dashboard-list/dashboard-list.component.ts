@@ -143,7 +143,7 @@ export class DashboardListComponent implements OnInit {
                       console.log('n_waCurrent3', JSON.parse(this.originalData)['m_waCurrent_nowx10'][3]);*/
                       this.m_waCurrent_nowx10.push(n_waCurrent0);
                       this.m_byaAlarm_history = JSON.parse(this.originalData)['m_byaAlarm_history'];
-                      //console.log('m_byaAlarm_history', JSON.parse(this.originalData)['m_byaAlarm_history']);
+                      console.log('m_byaAlarm_history', JSON.parse(this.originalData)['m_byaAlarm_history']);
                       // m_byaAlarm_history
                       for(let j = 0; j < this.m_byaAlarm_history.length; j++) {
                           if (this.m_byaAlarm_history[j] === '0') {
@@ -180,7 +180,7 @@ export class DashboardListComponent implements OnInit {
 
                       this.m_byReserved.push(JSON.parse(this.originalData)['m_byReserved'][3]);
                       this.m_byReserved4.push(JSON.parse(this.originalData)['m_byReserved'][4]);
-                      this.m_fParam_power.push(JSON.parse(this.originalData)['m_fParam_power']);
+                      this.m_fParam_power.push(JSON.parse(this.originalData)['m_fParam_power'].toFixed(2));
                       this.m_wS_mode.push(JSON.parse(this.originalData)['m_wS_mode']);
                       this.m_wM_status.push(JSON.parse(this.originalData)['m_wM_status']);
                       this.m_wParam_runtime.push(JSON.parse(this.originalData)['m_wParam_runtime']);
@@ -216,7 +216,7 @@ export class DashboardListComponent implements OnInit {
             this.chartData1 = [...this.chartData1];
         });
         setTimeout(() => {
-            this.getLineChart();
+            //this.getLineChart();
         }, 5000);
     }
 

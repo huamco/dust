@@ -14,13 +14,13 @@
         <form [formGroup]="form" class="dust-form">
           <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex="100" fxLayout="row" >
-              <p fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
+              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
                 <mat-form-field class="w-50">
                   <!--<input matInput placeholder="타입" formControlName="m_byMode">-->
                   <mat-select placeholder="타입" formControlName="m_byMode">
-                    <mat-option [value]="0">PANNEL</mat-option>
-                    <mat-option [value]="1">LINK</mat-option>
-                    <mat-option [value]="2">REMOTE</mat-option>
+                    <mat-option value="0">PANNEL</mat-option>
+                    <mat-option value="1">LINK</mat-option>
+                    <mat-option value="2">REMOTE</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
@@ -64,8 +64,8 @@
                 <mat-form-field class="w-50">
                   <!--<input matInput placeholder="수동펄싱 선택" formControlName="m_byManual_hauto_puls">-->
                   <mat-select placeholder="수동펄싱 선택" formControlName="m_byManual_hauto_puls">
-                    <mat-option [value]="0">MANUAL</mat-option>
-                    <mat-option [value]="1">AUTO</mat-option>
+                    <mat-option value="0">MANUAL</mat-option>
+                    <mat-option value="1">AUTO</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
@@ -75,24 +75,50 @@
                   <input matInput placeholder="수동 펄싱" formControlName="m_byManual_puls_cycle">
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="집진기 종류" formControlName="m_byType">
+                  <!--<input matInput placeholder="집진기 종류" formControlName="m_byType">-->
+                  <mat-select placeholder="집진기 종류" formControlName="m_byType">
+                    <mat-option value="0">PULS</mat-option>
+                    <mat-option value="1">SHAKE</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
-                  <input matInput placeholder="모터갯수" formControlName="m_byMotor_num">
+                  <!--<input matInput placeholder="모터갯수" formControlName="m_byMotor_num">-->
+                  <mat-select placeholder="모터갯수" formControlName="m_byMotor_num">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <!--<input matInput placeholder="언어" formControlName="m_byLanguage">-->
                   <mat-select placeholder="언어" formControlName="m_byLanguage">
-                    <mat-option [value]="0">KOREAN</mat-option>
-                    <mat-option [value]="1">ENGLISH</mat-option>
+                    <mat-option value="0">KOREAN</mat-option>
+                    <mat-option value="1">ENGLISH</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-50">
                   <input matInput placeholder="비밀번호" formControlName="m_wPassword">
                 </mat-form-field>
               </p>
-              <p fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
-
+              <p fxFlex="20" fxLayout="column" fxLayoutAlign="left left">
+                <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="setReset('m_byAll_reset')">설정 초기화</button>
+                <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="setReset('m_byPower_acc_reset')">적산전력 초기화</button>
+                <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="setReset('m_byAlarm_history_reset')">알람 초기화</button>
+                <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="setReset('m_byRuntime_reset')">운전시간 초기화</button>
+                <br><br><br>
+                <mat-form-field class="w-50">
+                  <input matInput [matDatepicker]="startDate" placeholder="시작일" formControlName="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                  <mat-datepicker #startDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="w-50">
+                  <input matInput [matDatepicker]="endDate" placeholder="종료일" formControlName="endDate">
+                  <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                  <mat-datepicker #endDate></mat-datepicker>
+                </mat-form-field>
+                <mat-checkbox formControlName="isAlarmList">알람 내역</mat-checkbox>
+                <button mat-raised-button class="m-1" style="line-height: 28px !important;" (click)="saveReports()">실시간 데이터값 저장</button>
+              </p>
+              <p fxFlex="10" fxLayout="column" fxLayoutAlign="left left">
               </p>
             </div>
           </div>
