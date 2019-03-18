@@ -175,3 +175,22 @@ export class PagesComponent implements OnInit, AfterViewInit {
   }
 
 }
+
+/*
+{
+    "_id" : ObjectId("5c88b1e54c66b11384b51717"),
+    "username" : "test001",
+    "password" : "test001",
+    "name" : "test",
+    "email" : "test",
+    "companyId" : "testCompany11",
+    "startDate" : ISODate("2019-03-12T15:00:00.000Z"),
+    "endDate" : ISODate("2019-04-29T15:00:00.000Z"),
+    "isAdmin" : 1,
+    "createDate" : ISODate("2019-03-13T07:31:49.457Z"),
+    "updateDate" : ISODate("2019-03-13T07:31:49.457Z"),
+    "id" : 1,
+    "hash" : "$2a$10$hTfSSxbFz9Wu7YDRPoUj.OBvbJOxwcAplYDvjAT/KKaRyHM2nWPQa",
+    "__v" : 0,
+    "isManager" : 1
+}*/
