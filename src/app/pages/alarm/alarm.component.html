@@ -2,13 +2,24 @@
   <div class="flex-p">
     <mat-card>
       <mat-card-content>
-        <mat-tab-group >
+        <mat-tab-group (selectedTabChange)="alarmList($event)">
           <mat-tab *ngFor="let dust of dusts; let i = index;"  label="{{dust.dustName}}">
             <div fxFlex="100">
               <mat-list>
-                <mat-list-item *ngFor="let d of dusts">
-                  <h4 matLine>{{d.dustName}}</h4>
-                  <p matLine> {{d.id}} </p>
+                <mat-list-item *ngFor="let history of dustAlarmData; let j = index;">
+                  {{history[j].m_byReserved[2] === '1' ? '필터교체' : ''}} {{history[j].createDate}}
+                  {{history[j].m_byReserved[2] === '2' ? '과전류' : ''}} {{history[j].createDate}}
+                  {{history[j].m_byReserved[2] === '4' ? '과차압' : ''}} {{history[j].createDate}}
+                  {{history[j].m_byReserved[2] === '10' ? '전류 불평형' : ''}} {{history[j].createDate}}
+                  <div *ngFor="let h of history[j].history ; let k = index;">
+                    <span *ngIf="h[k] !== '0'">
+                      <!--{{h[k] === '0' ? '에러없음' : ''}}-->
+                      {{h[k] === '1' ? '필터교체' : ''}}
+                      {{h[k] === '2' ? '과전류' : ''}}
+                      {{h[k] === '4' ? '과차압' : ''}}
+                      {{h[k] === '10' ? '전류 불평형' : ''}}
+                    </span>
+                  </div>
                 </mat-list-item>
               </mat-list>
               <!--<mat-table #table [dataSource]="dataSource1" class="mat-elevation-z8">

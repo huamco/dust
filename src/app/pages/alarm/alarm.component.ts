@@ -1,15 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DustService} from '../system/dust-register/dust.service';
-import {DustClientService} from '../typea/dust-client.service';
 import {Dust} from '../system/dust-register/dust.model';
-import {MatTableDataSource} from '@angular/material';
-import {DustLocation} from '../system/dust-register/dust-location.model';
 
 @Component({
   selector: 'app-alarm',
   templateUrl: './alarm.component.html',
   styleUrls: ['./alarm.component.scss'],
-    providers: [ DustService, DustClientService]
+    providers: [ DustService]
 })
 export class AlarmComponent implements OnInit, OnDestroy {
     public dusts: Dust[];
@@ -34,6 +31,8 @@ export class AlarmComponent implements OnInit, OnDestroy {
     s_structData: any;
     r_structData: any;
     currentDeviceData: any;
+    dustAlarmData: any = [];
+    intervalId;
 
   constructor(public dustService: DustService) { }
 
@@ -47,11 +46,36 @@ export class AlarmComponent implements OnInit, OnDestroy {
         this.dusts = null; //for show spinner each time
         this.dustService.getDusts().subscribe(dusts => {
             this.dusts = dusts;
-            console.log(this.dusts);
+            //this.alarmList(this.dusts[0].dustSN);
+        });
+    }
+
+    alarmList($ev) {
+      // console.log(this.dusts[$ev.index].dustSN);
+      const sn = this.dusts[$ev.index].dustSN;
+        this.dustAlarmData = [];
+        this.dustService.getDustAlarmList(sn).subscribe(alarms => {
+            if (alarms.length) {
+                console.log('alarms::::::::::::', alarms);
+                for (let i = 0; i < alarms.length; i++) {
+                    let alarmData = [];
+                    if (sn === alarms[i].data.m_wEth_id) {
+                        alarmData = [{
+                            id: alarms[i].data.m_wEth_id,
+                            history: alarms[i].data.m_byaAlarm_history,
+                            m_byReserved: alarms[i].data.m_byReserved,
+                            createDate: alarms[i].data.createDate
+                        }];
+                        this.dustAlarmData.push(alarmData);
+                    }
+                    console.log(this.dustAlarmData);
+                }
+            }
         });
     }
 
     ngOnDestroy() {
-        //this.connection.unsubscribe();
+        // clearInterval(this.intervalId);
+        // this.connection.unsubscribe();
     }
 }

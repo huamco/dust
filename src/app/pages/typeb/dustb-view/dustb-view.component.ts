@@ -10,7 +10,7 @@ import {DustClientService} from '../../typea/dust-client.service';
   selector: 'app-dustb-view',
   templateUrl: './dustb-view.component.html',
   styleUrls: ['./dustb-view.component.scss'],
-    providers: [DustConfigService, DustClientService]
+    providers: [DustConfigService]
 })
 export class DustBViewComponent implements OnInit, OnDestroy {
 

@@ -9,7 +9,7 @@ import {DustClientService} from '../dust-client.service';
   selector: 'app-dust-view',
   templateUrl: './dust-view.component.html',
   styleUrls: ['./dust-view.component.scss'],
-    providers: [DustConfigService, DustClientService]
+    providers: [DustConfigService]
 })
 export class DustViewComponent implements OnInit, OnDestroy {
 

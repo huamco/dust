@@ -1,18 +1,22 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Dust} from '../../system/dust-register/dust.model';
 import {Settings} from '../../../app.settings.model';
 import {AppSettings} from '../../../app.settings';
 import {DustService} from '../../system/dust-register/dust.service';
 import {DustClientService} from '../../typea/dust-client.service';
+import * as moment from 'moment';
+import {elect} from '../dashboard.data';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-list',
   templateUrl: './dashboard-list.component.html',
   styleUrls: ['./dashboard-list.component.scss']
 })
-export class DashboardListComponent implements OnInit {
+export class DashboardListComponent implements OnInit, OnDestroy {
 
     @Input() pushParamData: any;
+    @Input() paramDustId: any;
     @Input() paramDustName: any;
     @Output() cancelViewDashboard = new EventEmitter<any>();
 
@@ -86,117 +90,150 @@ export class DashboardListComponent implements OnInit {
     m_byaAlarm_arr: any = [];
     chartData: any = [];
     chartData1: any = [];
+    dailyChartData1: any = [];
+    dailyChartData: any = [];
+    monthlyChartData: any = [];
+    m_wEth_id: any;
+    dustData: any = [];
+    intervalId;
+    dailyIntervalId;
+    monthlyIntervalId;
 
     public settings: Settings;
+    subscriptionCloseDevice: Subscription;
   constructor(public appSettings: AppSettings,
               public dustService: DustService,
               public dustClientService: DustClientService) {
       this.settings = this.appSettings.settings;
+      this.closeDeviceSubscribe();
   }
 
   ngOnInit() {
       this.isViewConfig = false;
-      this.getLineChart();
+      //this.m_wEth_id = '1';
+      //console.log(this.dustData.dustPacket[0].currentDeviceData);
       this.getDusts();
+
+      this.getLineChart();
+      this.intervalId = setInterval(() => this.getLineChart(), 40000);
+      this.getDailyChart();
+      this.dailyIntervalId = setInterval(() => this.getDailyChart(), 35000);
+      this.getMonthlyChart();
+      this.monthlyIntervalId = setInterval(() => this.getMonthlyChart(), 30000);
 
       this.connection = this.dustClientService.getMessages().subscribe(data => {
           if(data) {
+              this.isViewError = false;
               this.paramData =  data;
               this.paramData = JSON.parse(JSON.stringify(JSON.parse(this.paramData)));
-              this.m_wAuto_puls_val = [];
-              this.m_wPower_value = [];
-              this.m_waCurrent_nowx10 = [];
-              this.m_byReserved = [];
-              this.m_byReserved4 = [];
-              this.m_fParam_power = [];
-              this.m_wParam_runtime = [];
-              this.m_byType = [];
-              this.m_wS_mode = [];
-              this.m_wM_status = [];
-              this.currentDeviceData = [];
-              this.m_wPressure = [];
-              this.m_byMotor_num = [];
-              this.m_byValve_sel = [];
-              // console.log('this.paramData.length===>',this.paramData.length);
-
-              for(var i=0; i<this.paramData.length; i++) {
-                  this.deviceData = JSON.parse(JSON.stringify(this.paramData[i])).data;
-                  //console.log('this.deviceData================>>>>>');
+              // new
+              this.deviceData = JSON.parse(JSON.stringify(this.paramData[0])).data;
+              if (JSON.parse(JSON.stringify(this.deviceData)).bufferData) {
                   let buff = JSON.parse(JSON.stringify(this.deviceData)).buff;
                   this.originalData = JSON.parse(JSON.stringify(this.deviceData)).bufferData;
-                  //console.log(buff);
-                  //console.log(this.originalData);
-                  if(!JSON.parse(JSON.stringify(this.deviceData)).error) {
-                      this.currentDeviceData.push(this.paramData[i]);
-                      this.r_structData = JSON.parse(this.originalData)['m_stRunParam'];
-                      this.s_structData = JSON.parse(this.originalData)['m_stSysParam'];
+                  this.currentDeviceData = this.paramData[0];
+                  // console.log('this.originalData===>', this.originalData);
+                  this.r_structData = JSON.parse(this.originalData)['m_stRunParam'];
+                  this.s_structData = JSON.parse(this.originalData)['m_stSysParam'];
 
-                      this.m_wAuto_puls_val.push(JSON.parse(JSON.stringify(this.r_structData))['m_wAuto_puls_val']);
-                      this.m_wPower_value.push(JSON.parse(JSON.stringify(this.s_structData))['m_wPower_value']);
+                  this.m_wEth_id = JSON.parse(JSON.stringify(this.s_structData))['m_wEth_id'];
+                  this.m_wAuto_puls_val = JSON.parse(JSON.stringify(this.r_structData))['m_wAuto_puls_val'];
+                  this.m_wPower_value = JSON.parse(JSON.stringify(this.s_structData))['m_wPower_value'];
 
-                      let n_waCurrent0 = parseInt(JSON.parse(this.originalData)['m_waCurrent_nowx10'][0])/10;
-                      let n_waCurrent2 = parseInt(JSON.parse(this.originalData)['m_waCurrent_nowx10'][2])/10;
+                  let n_waCurrent0 = parseInt(JSON.parse(this.originalData)['m_waCurrent_nowx10'][0])/10;
+                  // let n_waCurrent2 = parseInt(JSON.parse(this.originalData)['m_waCurrent_nowx10'][2])/10;
 
-                      /*console.log('n_waCurrent0', JSON.parse(this.originalData)['m_waCurrent_nowx10'][0]);
-                      console.log('n_waCurrent1', JSON.parse(this.originalData)['m_waCurrent_nowx10'][1]);
-                      console.log('n_waCurrent2', JSON.parse(this.originalData)['m_waCurrent_nowx10'][2]);
-                      console.log('n_waCurrent3', JSON.parse(this.originalData)['m_waCurrent_nowx10'][3]);*/
-                      this.m_waCurrent_nowx10.push(n_waCurrent0);
-                      this.m_byaAlarm_history = JSON.parse(this.originalData)['m_byaAlarm_history'];
-                      console.log('m_byaAlarm_history', JSON.parse(this.originalData)['m_byaAlarm_history']);
-                      // m_byaAlarm_history
-                      for(let j = 0; j < this.m_byaAlarm_history.length; j++) {
-                          if (this.m_byaAlarm_history[j] === '0') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = false;
-                              break;
-                          }
-                          if (this.m_byaAlarm_history[j] === '1') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = true;
-                              break;
-                          }
-                          if (this.m_byaAlarm_history[j] === '20') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = true;
-                              break;
-                          }
-                          if (this.m_byaAlarm_history[j] === '40') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = true;
-                              break;
-                          }
-                          if (this.m_byaAlarm_history[j] === '10') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = true;
-                              break;
-                          }
-                          if (this.m_byaAlarm_history[j] === '20') {
-                              this.m_byaAlarm_arr.push(this.m_byaAlarm_history[j]);
-                              this.alarmError = true;
-                              break;
+                  this.m_waCurrent_nowx10 = n_waCurrent0;
+                  this.m_byaAlarm_history = JSON.parse(this.originalData)['m_byReserved'][2];
+                  this.m_byReserved = JSON.parse(this.originalData)['m_byReserved'][3];
+                  this.m_byReserved4 = JSON.parse(this.originalData)['m_byReserved'][4];
+                  this.m_fParam_power = JSON.parse(this.originalData)['m_fParam_power'].toFixed(2);
+                  this.m_wS_mode = JSON.parse(this.originalData)['m_wS_mode'];
+                  this.m_wM_status = JSON.parse(this.originalData)['m_wM_status'];
+                  this.m_wParam_runtime = JSON.parse(this.originalData)['m_wParam_runtime'];
+                  this.m_byType = JSON.parse(JSON.stringify(this.s_structData))['m_byType'];
+                  this.m_byMotor_num = JSON.parse(JSON.stringify(this.s_structData))['m_byMotor_num'];
+                  this.m_byValve_sel = JSON.parse(JSON.stringify(this.r_structData))['m_byValve_sel'];
+                  this.m_wPressure = JSON.parse(this.originalData)['m_wPressure'];
+                  //console.log('iiiii::::::', JSON.parse(this.originalData)['m_fParam_power']);
+                  // this.setWsMode(this.m_wS_mode[i], this.m_wM_status[i], this.m_byType[i],this.m_byMotor_num[i]);
+                  this.setSData(buff);
+                  // console.log('m_wEth_id', this.m_wEth_id);
+                  if (!JSON.parse(JSON.stringify(this.deviceData)).error) {
+                      this.isViewError = false;
+                      for (let i = 0; i < this.dustData.length; i++) {
+                          if (this.dustData[i].dust.dustSN === this.m_wEth_id) {
+                              this.dustData[i].dustPacket = [];
+
+                              // this.setWsMode(this.dustData[i].dustPacket);
+                              let hexString = parseInt(this.m_wM_status).toString(16);
+                              if (hexString.length % 2) {
+                                  hexString = '0' + hexString;
+                              }
+                              this.fan1ScreenView = false;
+                              this.fan2ScreenView = false;
+                              if (this.m_byMotor_num === '2') {
+                                  this.fan1View = 0;
+                                  this.fan2View = 0;
+                              }
+                              if (this.m_wS_mode === '5') {
+                                  this.fan1View = 0;
+                                  this.fan2View = 0;
+                              }
+                              if (this.m_wS_mode === '6') {
+                                  this.fan1View = 1;
+                                  this.fan2View = 0;
+                              }
+                              if (this.m_wS_mode === '7') {
+                                  this.fan1View = 0;
+                                  this.fan2View = 1;
+                              }
+                              if (this.m_wS_mode === '8') {
+                                  this.fan1View = 1;
+                                  this.fan2View = 1;
+                              }
+                              if (this.m_wM_status === '0') {
+                                  this.fan1View = 0;
+                                  this.fan2View = 0;
+                                  this.pulsView = 0;
+                                  this.shkingView = 0;
+                              } else {
+                                  this.pulsView = 1;
+                                  this.shkingView = 1;
+                              }
+                              this.dustData[i].dustPacket.push({
+                                  m_wEth_id: this.m_wEth_id,
+                                  m_wAuto_puls_val: this.m_wAuto_puls_val,
+                                  m_wPower_value: this.m_wPower_value,
+                                  m_waCurrent_nowx10: this.m_waCurrent_nowx10,
+                                  m_byaAlarm_history: this.m_byaAlarm_history,
+                                  m_byReserved: this.m_byReserved,
+                                  m_byReserved4: this.m_byReserved4,
+                                  m_fParam_power: this.m_fParam_power,
+                                  m_wS_mode: this.m_wS_mode,
+                                  m_wM_status: this.m_wM_status,
+                                  m_wParam_runtime: this.m_wParam_runtime,
+                                  m_byType: this.m_byType,
+                                  m_byMotor_num: this.m_byMotor_num,
+                                  m_byValve_sel: this.m_byValve_sel,
+                                  m_wPressure: this.m_wPressure,
+                                  fan1View: this.fan1View,
+                                  fan2View: this.fan2View,
+                                  pulsView: this.pulsView,
+                                  shkingView: this.shkingView,
+                                  paramData: this.paramData,
+                                  currentDeviceData: this.currentDeviceData,
+                                  isViewError: this.isViewError
+                              });
                           }
                       }
-
-                      this.m_byReserved.push(JSON.parse(this.originalData)['m_byReserved'][3]);
-                      this.m_byReserved4.push(JSON.parse(this.originalData)['m_byReserved'][4]);
-                      this.m_fParam_power.push(JSON.parse(this.originalData)['m_fParam_power'].toFixed(2));
-                      this.m_wS_mode.push(JSON.parse(this.originalData)['m_wS_mode']);
-                      this.m_wM_status.push(JSON.parse(this.originalData)['m_wM_status']);
-                      this.m_wParam_runtime.push(JSON.parse(this.originalData)['m_wParam_runtime']);
-                      this.m_byType.push(JSON.parse(JSON.stringify(this.s_structData))['m_byType']);
-                      this.m_byMotor_num.push(JSON.parse(JSON.stringify(this.s_structData))['m_byMotor_num']);
-                      this.m_byValve_sel.push(JSON.parse(JSON.stringify(this.r_structData))['m_byValve_sel']);
-                      this.m_wPressure.push(JSON.parse(this.originalData)['m_wPressure']);
-                      //console.log('iiiii::::::', this.m_wPressure);
-                      this.setWsMode(this.m_wS_mode[i], this.m_wM_status[i], this.m_byType[i],this.m_byMotor_num[i]);
-                      this.setSData(buff);
+                      // console.log(this.dustData);
                   } else {
                       this.isViewError = true;
-                      console.log('TYPE A ERR');
+                      console.log('NETWORK ERR');
                   }
               }
-              //this.sendMessage();
+
           } else {
               console.log('connection Err');
               this.isViewError = true;
@@ -205,19 +242,65 @@ export class DashboardListComponent implements OnInit {
   }
 
     getLineChart() {
-        this.chartData = [];
-        this.chartData1 = [];
-        this.dustService.getElectData().subscribe(res => {
+        //this.m_wEth_id
+        const id = this.m_wEth_id;
+        const chartData = [{
+            name: 'power',
+            series: []
+        }];
+
+        const chartData1 = [{
+            name: 'pressure',
+            series: []
+        }];
+
+        this.dustService.getElectData(id).subscribe(res => {
             res.forEach((item) => {
-                this.chartData.push({'name': item.data.createDate , 'value': item.data.m_fParam_power});
-                this.chartData1.push({'name': item.data.createDate, 'value': Math.round(item.data.m_wPressure)});
+                // console.log(moment(item.data.createDate).format('YYYY-MM-DD HH'));
+                chartData[0].series.push({'name': item._id.dateTime , 'value':  Math.round(item.data.m_fParam_power)});
+                chartData1[0].series.push({'name': item._id.dateTime , 'value':  Math.round(item.data.m_wPressure)});
+                /*chartData[0].series.push({'name': item.data.createDate , 'value': Math.round(item.data.m_fParam_power)});
+                chartData1[0].series.push({'name': item.data.createDate , 'value':  Math.round(item.data.m_wPressure)});*/
             });
-            this.chartData = [...this.chartData];
-            this.chartData1 = [...this.chartData1];
+            this.chartData = chartData;
+            this.chartData1 = chartData1;
+
+            // console.log(this.chartData);
         });
-        setTimeout(() => {
-            //this.getLineChart();
-        }, 5000);
+    }
+
+    getDailyChart() {
+        //this.m_wEth_id
+        const id = this.m_wEth_id;
+        const dailyChartData = [{}];
+
+        const dailyChartData1 = [{}];
+
+        this.dustService.getDailyPower(id).subscribe(res => {
+            res.forEach((item) => {
+                dailyChartData.push({'name': moment(item.data.createDate).format('YYYY-MM-DD') , 'value':  Math.round(item.data.m_fParam_power)});
+                dailyChartData1.push({'name': moment(item.data.createDate).format('YYYY-MM-DD') , 'value': Math.round(item.data.m_fParam_power)});
+                /*this.dailyChartData.push({'name': moment(item.data.createDate).format('YYYY-MM-DD') , 'value': item.data.m_fParam_power});
+                this.dailyChartData1.push({'name': moment(item.data.createDate).format('YYYY-MM-DD') , 'value': item.data.m_fParam_power});*/
+            });
+            console.log('::::::::::::::::::');
+            console.log(dailyChartData);
+            this.dailyChartData = dailyChartData;
+            this.dailyChartData1 = dailyChartData1;
+        });
+    }
+
+    getMonthlyChart() {
+        //this.m_wEth_id
+        const id = this.m_wEth_id;
+        const monthlyChartData = [{}];
+
+        this.dustService.getMonthlyPower(id).subscribe(res => {
+            res.forEach((item) => {
+                monthlyChartData.push({'name': moment(item.data.createDate).format('YYYY-MM') , 'value':  Math.round(item.data.m_fParam_power)});
+            });
+            this.monthlyChartData = monthlyChartData;
+        });
     }
 
     sendMessage(deviceData) {
@@ -226,9 +309,19 @@ export class DashboardListComponent implements OnInit {
     }
 
     getDusts(): void {
+      // console.log('this.paramDustId==>', this.paramDustId);
         this.dusts = null;
         this.dustService.getDusts().subscribe(dusts => {
             this.dusts = dusts;
+            for (let i = 0; i < this.dusts.length; i++) {
+                if (this.dusts[i].id === this.paramDustId) {
+                    this.dustData.push({
+                        dust: this.dusts[i],
+                        dustPacket: []
+                    });
+                }
+            }
+            console.log(this.dustData);
         });
     }
 
@@ -240,49 +333,6 @@ export class DashboardListComponent implements OnInit {
         this.socketData.push({
             'data' : data
         });
-    }
-
-    setWsMode(mode, status: any, type, motor) {
-        //console.log('status::::::', status);
-        let hexString = parseInt(status).toString(16);
-        if (hexString.length % 2) {
-            hexString = '0' + hexString;
-        }
-        //console.log('hexString:::::', hexString);
-        //console.log('mode::::::', mode); // 6
-        // console.log(parseInt(this.M_AUTO_PULS) +  parseInt(this.M_MANUAL_PULS) +  parseInt(this.M_MANUAL_SHAKE)+parseInt(this.M_FAN1))
-        this.fan1ScreenView = false;
-        this.fan2ScreenView = false;
-        if(motor === '2') {
-            this.fan1View = 0;
-            this.fan2View = 0;
-        }
-        if (mode === '5') {
-            this.fan1View = 0;
-            this.fan2View = 0;
-        }
-        if (mode === '6') {
-            this.fan1View = 1;
-            this.fan2View = 0;
-        }
-        if (mode === '7') {
-            this.fan1View = 0;
-            this.fan2View = 1;
-        }
-        if (mode === '8') {
-            this.fan1View = 1;
-            this.fan2View = 1;
-        }
-        if (status === '0') {
-            this.fan1View = 0;
-            this.fan2View = 0;
-            this.pulsView = 0;
-            this.shkingView = 0;
-        } else {
-            this.pulsView = 1;
-            this.shkingView = 1;
-        }
-
     }
 
     setFanMode1(currentDeviceData, currentMode, currentType) {
@@ -404,5 +454,36 @@ export class DashboardListComponent implements OnInit {
         if (!e) {
             this.isViewConfig = false;
         }
+    }
+
+    ngOnDestroy(): void {
+      clearInterval(this.intervalId);
+      clearInterval(this.dailyIntervalId);
+      clearInterval(this.monthlyIntervalId);
+      this.subscriptionCloseDevice.unsubscribe();
+    }
+
+    private closeDeviceSubscribe() {
+        this.subscriptionCloseDevice = this.dustClientService.getCloseDevice().subscribe(serialNumber => {
+            console.log('serialNumber::::', serialNumber);
+            if (serialNumber) {
+                this.isViewError = true;
+                let i = 0;
+                for (i = 0; i < this.dustData.length; i++) {
+                    if (this.dustData[i].dust.dustSN === serialNumber) {
+                        //this.dustData[i].dustPacket = [];
+                        const dustPacket = this.dustData[i].dustPacket[0];
+                        if (dustPacket) {
+                            dustPacket['isViewError'] = this.isViewError;
+                        }
+                        /*this.dustData[i].dustPacket.push({
+                            m_wEth_id: serialNumber,
+                            isViewError: this.isViewError
+                        });*/
+                    }
+                }
+                // console.log(this.dustData[i].dustPacket);
+            }
+        });
     }
 }

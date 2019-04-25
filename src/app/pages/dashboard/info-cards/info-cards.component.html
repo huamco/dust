@@ -12,7 +12,7 @@
             <div class="w-100 h-100p">
                 <ngx-charts-line-chart
                         [scheme]="colorScheme"
-                        [results]="orders"
+                        [results]="chartData"
                         [autoScale]="autoScale"
                         [animations] = "true"
                         (select)="onSelect($event)">
@@ -36,7 +36,7 @@
             <div class="w-100 h-100p">
                 <ngx-charts-bar-vertical
                         [scheme]="colorScheme"
-                        [results]="products"
+                        [results]="dailyChartData"
                         (select)="onSelect($event)">
                 </ngx-charts-bar-vertical>
             </div>
@@ -55,7 +55,7 @@
             <div class="w-100 h-100p">
                 <ngx-charts-bar-vertical
                         [scheme]="colorScheme"
-                        [results]="products"
+                        [results]="monthlyChartData"
                         (select)="onSelect($event)">
                 </ngx-charts-bar-vertical>
             </div>

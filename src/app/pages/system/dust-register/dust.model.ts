@@ -5,6 +5,7 @@ export class Dust {
     version: string;
     dustType: string;
     dustName: string;
+    dustSN: string;
     isActive: number;
     date: string;
     image: string;

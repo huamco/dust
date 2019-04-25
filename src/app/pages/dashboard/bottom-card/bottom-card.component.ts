@@ -1,15 +1,14 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Settings} from '../../../app.settings.model';
 import {AppSettings} from '../../../app.settings';
-import {customers, orders, products, refunds, elect} from '../dashboard.data';
+import {customers, elect, products, refunds} from '../dashboard.data';
 import {DustService} from '../../system/dust-register/dust.service';
-import {DustClientService} from '../../typea/dust-client.service';
 
 @Component({
   selector: 'app-bottom-card',
   templateUrl: './bottom-card.component.html',
   styleUrls: ['./bottom-card.component.scss'],
-    providers: [DustService, DustClientService]
+    providers: [DustService]
 })
 export class BottomCardComponent implements OnInit {
 
@@ -25,6 +24,7 @@ export class BottomCardComponent implements OnInit {
     public previousWidthOfResizedDiv:number = 0;
     public settings: Settings;
     @Input() chartData1: any;
+    @Input() dailyChartData1: any;
     constructor(public appSettings:AppSettings){
         this.settings = this.appSettings.settings;
     }
@@ -41,7 +41,7 @@ export class BottomCardComponent implements OnInit {
     }
 
     getSocketData() {
-        this.orders1 = elect;
+        /*this.orders1 = elect;
         // this.orders[0].series.push(this.chartData);
         //console.log('chartDatachartDatachartData==>', this.chartData1);
         if (this.chartData1.length) {
@@ -52,13 +52,19 @@ export class BottomCardComponent implements OnInit {
             }
             setTimeout(() => this.orders1 = [...elect] );
         }
-        /*for (let i = 1; i < 20; i++) {
-            this.orders[0].series.push({"name": 1980+i, "value": Math.ceil(Math.random() * 1000000)});
-        }*/
+        this.refunds = refunds;
+        if (this.dailyChartData1.length) {
+            this.refunds = [];
+            for (let i = 1; i < this.dailyChartData1.length; i++) {
+                let item = this.dailyChartData1[i];
+                this.refunds.push({"name": item['name'], "value":item['value']});
+            }
+            setTimeout(() => this.refunds = [...refunds] );
+        }
 
         setTimeout(() => {
             this.getSocketData();
-        }, 2000);
+        }, 2000);*/
     }
 
     public onSelect(event) {
@@ -85,16 +91,6 @@ export class BottomCardComponent implements OnInit {
     ngOnDestroy(){
         this.orders1[0].series.length = 0;
         //this.customers[0].series.length = 0;
-    }
-
-    ngAfterViewChecked() {
-        /*if(this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth){
-            setTimeout(() => this.orders = [...orders] );
-            setTimeout(() => this.products = [...products] );
-            setTimeout(() => this.customers = [...customers] );
-            setTimeout(() => this.refunds = [...refunds] );
-        }
-        this.previousWidthOfResizedDiv = this.resizedDiv.nativeElement.clientWidth;*/
     }
 
 }

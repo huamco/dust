@@ -7,7 +7,7 @@ import {DustClientService} from '../typea/dust-client.service';
   selector: 'app-typeb',
   templateUrl: './typeb.component.html',
   styleUrls: ['./typeb.component.scss'],
-    providers: [ DustService, DustClientService]
+    providers: [ DustService]
 })
 export class TypebComponent implements OnInit, OnDestroy {
 

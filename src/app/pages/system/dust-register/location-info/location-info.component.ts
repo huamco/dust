@@ -33,6 +33,7 @@ export class LocationInfoComponent implements OnInit {
           version: null,
           dustType: null,
           dustName: null,
+          dustSN: null,
           viewComponent: null,
           isActive: 0,
           m_wAuto_puls_val: 0,
@@ -56,17 +57,20 @@ export class LocationInfoComponent implements OnInit {
   }
 
   selectedDustLocations() {
-      this.selectedLocation = _.find(this.locations, { 'id': this.form.controls['locationID'].value }).text;
+      //this.selectedLocation = _.find(this.locations, { 'id': this.form.controls['locationID'].value }).text;
   }
 
   ngOnInit() {
       this.getDustLocations();
+      console.log(this.dust);
       if (this.dust) {
+          this.form.controls['id'].setValue(this.dust.id);
           this.form.controls['locationID'].setValue(this.dust.locationID);
           this.selectedLocation = this.dust.locationID;
           this.form.controls['dustIPAddress'].setValue(this.dust.dustIPAddress);
           this.form.controls['dustType'].setValue(this.dust.dustType);
           this.form.controls['dustName'].setValue(this.dust.dustName);
+          this.form.controls['dustSN'].setValue(this.dust.dustSN);
           this.form.controls['version'].setValue(this.dust.version);
           this.form.controls['isActive'].setValue(this.dust.isActive);
           this.form.controls['m_wAuto_puls_val'].setValue(this.dust.m_wAuto_puls_val);
@@ -79,6 +83,7 @@ export class LocationInfoComponent implements OnInit {
       else {
           this.dust = new Dust();
       }
+      console.log(this.selectedLocation);
   }
     close(): void {
         this.dialogRef.close();

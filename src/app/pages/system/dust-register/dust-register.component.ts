@@ -16,8 +16,8 @@ import {LocationInfoComponent} from './location-info/location-info.component';
 })
 export class DustRegisterComponent implements OnInit {
 
-  public displayedColumns = ['location', 'count', 'isActive', 'delete'];
-  public displayedColumns1 = ['dustName','dustIPAddress', 'dustType', 'version', 'isActive','delete'];
+  public displayedColumns = ['location', 'count', 'isActive', 'edit' ,'delete'];
+  public displayedColumns1 = ['dustName','dustIPAddress', 'dustType', 'version', 'isActive', 'edit' ,'delete'];
   public dataSource: any;
   public dataSource1: any;
   public settings: Settings;
@@ -92,6 +92,7 @@ export class DustRegisterComponent implements OnInit {
       });
 
       this.dialogRef.afterClosed().subscribe(dustLocation => {
+          console.log(dustLocation);
           if (dustLocation) {
               (dustLocation.id) ? this.updateDustLocation(dustLocation) : this.addDustLocation(dustLocation);
           }

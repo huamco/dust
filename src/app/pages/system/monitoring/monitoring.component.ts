@@ -8,7 +8,7 @@ import {MatTableDataSource} from '@angular/material';
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
   styleUrls: ['./monitoring.component.scss'],
-    providers: [ DustService, DustClientService]
+    providers: [ DustService]
 })
 export class MonitoringComponent implements OnInit, OnDestroy {
 

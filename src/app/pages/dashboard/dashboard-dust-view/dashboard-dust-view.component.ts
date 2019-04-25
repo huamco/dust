@@ -6,12 +6,14 @@ import {DustConfigService} from '../../typea/dust-config.service';
 import {DustClientService} from '../../typea/dust-client.service';
 import {MatDialog} from '@angular/material';
 import {DialogComponent} from '../../../theme/components/dialog/dialog.component';
+import {DustService} from '../../system/dust-register/dust.service';
+import { saveAs as importedSaveAs } from 'file-saver';
 
 @Component({
   selector: 'app-dashboard-dust-view',
   templateUrl: './dashboard-dust-view.component.html',
   styleUrls: ['./dashboard-dust-view.component.scss'],
-    providers: [DustConfigService, DustClientService]
+    providers: [DustConfigService]
 })
 export class DashboardDustViewComponent implements OnInit, OnDestroy {
 
@@ -28,10 +30,12 @@ export class DashboardDustViewComponent implements OnInit, OnDestroy {
     originalData: any;
     s_structData: any;
     r_structData: any;
+    m_wEth_id: any;
 
     constructor(public fb: FormBuilder,
                 public dustConfigService: DustConfigService,
                 public dustClientService: DustClientService,
+                public dustService: DustService,
                 public dialog: MatDialog) {
         this.form = this.fb.group({
             id: null,
@@ -108,7 +112,7 @@ export class DashboardDustViewComponent implements OnInit, OnDestroy {
         this.form.controls['m_byMotor_num'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_byMotor_num']);
         this.form.controls['m_byLanguage'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_byLanguage']);
         this.form.controls['m_wPassword'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wPassword']);
-
+        this.m_wEth_id = JSON.parse(JSON.stringify(this.s_structData))['m_wEth_id'];
         /*this.form.controls['m_wPower_value'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wPower_value']);
         this.form.controls['m_wCali_pressure'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_wCali_pressure']);
         this.form.controls['m_nRev_pressure'].setValue(JSON.parse(JSON.stringify(this.s_structData))['m_nRev_pressure']);
@@ -245,12 +249,20 @@ export class DashboardDustViewComponent implements OnInit, OnDestroy {
         this.sendMessage(this.deviceData);
     }
 
-    cancelDustConfig(){
+    cancelDustConfig() {
         this.cancelViewConfig.emit(false);
     }
 
     saveReports() {
-
+        const startData = this.form.controls['startDate'].value;
+        const endDate = this.form.controls['endDate'].value;
+        const isAlarmList = this.form.controls['isAlarmList'].value;
+        // this.m_wEth_id = '1';
+        this.dustService.getReportData(this.m_wEth_id, startData, endDate, isAlarmList).subscribe( res => {
+            const data = new Blob([res], {type: 'application/vnd.ms-excel'});
+            console.log(data);
+            importedSaveAs(data, 'report.xlsx');
+        });
     }
 
     setReset(val) {

@@ -49,16 +49,17 @@ export class PagesComponent implements OnInit, AfterViewInit {
     this.menuOption = this.settings.menu;
     this.menuTypeOption = this.settings.menuType;
     this.defaultMenu = this.settings.menu;;
-    // this.getMonthlyPowerSum();
-    // this.getDailyPowerSum();
-    //   this.getTotalHour();
+    this.getMonthlyPowerSum();
+    this.getDailyPowerSum();
+    //this.getTotalHour();
   }
 
     getMonthlyPowerSum() {
       this.dustService.getMonthlyPowerSum().subscribe(res => {
-          res.forEach((item) => {
-            this.monthlyPower = item.data.m_fParam_power;
-          });
+        console.log(res);
+        if (res) {
+            this.monthlyPower = res.data.m_fParam_power;
+        }
       });
       setTimeout(() => {
           //this.getMonthlyPowerSum();
@@ -67,9 +68,10 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
     getDailyPowerSum() {
         this.dustService.getDailyPowerSum().subscribe(res => {
-            res.forEach((item) => {
-                this.dailyPower = item.data.m_fParam_power;
-            });
+            if (res) {
+                this.dailyPower = res.data.m_fParam_power;
+            }
+
         });
         setTimeout(() => {
             //this.getDailyPowerSum();
@@ -78,9 +80,10 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
     getTotalHour() {
         this.dustService.getTotalHour().subscribe(res => {
-            res.forEach((item) => {
-                this.totalhour = item.data.m_fParam_power;
-            });
+            if (res) {
+                this.totalhour = res.data.m_fParam_power;
+            }
+
         });
         setTimeout(() => {
             //this.getTotalHour();

@@ -4,7 +4,7 @@
     <div fxLayout="column" class="form-field-outer">
 
       <mat-form-field class="w-100">
-        <mat-select placeholder="장비위치" formControlName="locationID"
+        <mat-select placeholder="장비위치" [(ngModel)] = "selectedLocation" formControlName="locationID"
                     (selectionChange)="selectedDustLocations()">
           <mat-option *ngFor="let location of locations" [value]="location.id">
             {{location.text}}
@@ -18,6 +18,9 @@
       </mat-form-field>
       <mat-form-field class="w-100">
         <input matInput placeholder="장비명" formControlName="dustName">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput placeholder="장비번호" formControlName="dustSN">
       </mat-form-field>
       <mat-form-field class="w-100">
         <input matInput placeholder="장비타입" formControlName="dustType">

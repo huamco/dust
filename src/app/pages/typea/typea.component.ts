@@ -1,14 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DustService} from '../system/dust-register/dust.service';
 import {Dust} from '../system/dust-register/dust.model';
 import {DustClientService} from './dust-client.service';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-typea',
   templateUrl: './typea.component.html',
   styleUrls: ['./typea.component.scss'],
-    providers: [ DustService, DustClientService]
+    providers: [ DustService]
 })
 export class TypeaComponent implements OnInit, OnDestroy {
 

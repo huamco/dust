@@ -23,14 +23,22 @@
             <mat-header-cell *matHeaderCellDef> 사용여부 </mat-header-cell>
             <mat-cell *matCellDef="let dustLocations"> {{dustLocations.isActive}} </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="delete">
+          <ng-container matColumnDef="edit" style="width:100px;">
             <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-            <mat-cell *matCellDef="let dustLocations" (click)="deleteDustLocations(dustLocations)">
-              <mat-icon>delete_outline</mat-icon>
+            <mat-cell *matCellDef="let dustLocations" >
+              <button mat-raised-button color="primary" class="m-1" (click)="openDustLocationDialog(dustLocations)"><mat-icon>edit_outline</mat-icon></button>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="delete" style="width:100px;">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let dustLocations">
+              <button mat-raised-button color="primary" class="m-1" (click)="deleteDustLocations(dustLocations)">
+                <mat-icon>delete_outline</mat-icon></button>
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let dustLocations; columns: displayedColumns;"></mat-row>
+          <mat-row *matRowDef="let dustLocations; columns: displayedColumns;"
+                   ></mat-row>
         </mat-table>
       </mat-card-content>
       <mat-card-header fxLayoutAlign="left left">
@@ -38,7 +46,7 @@
           <mat-card-subtitle><h3>장비 등록 및 배치</h3></mat-card-subtitle>
         </div>
         <div fxFlex="70" style="margin-bottom: 5px;text-align: right;">
-          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="openDustDialog(dustLocations)">추가</button>
+          <button mat-raised-button color="primary" class="m-1" style="line-height: 28px !important;" (click)="openDustDialog(null)">추가</button>
         </div>
       </mat-card-header>
       <mat-card-content>
@@ -64,14 +72,22 @@
               <mat-header-cell *matHeaderCellDef> 사용여부 </mat-header-cell>
               <mat-cell *matCellDef="let dusts"> {{dusts.isActive}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="edit">
+              <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+              <mat-cell *matCellDef="let dusts" >
+                <button mat-raised-button color="primary" class="m-1" (click)="openDustDialog(dusts)"><mat-icon>edit_outline</mat-icon></button>
+              </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="delete">
               <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-              <mat-cell *matCellDef="let dusts" (click)="deleteDust(dusts)">
-                <mat-icon>delete_outline</mat-icon>
+              <mat-cell *matCellDef="let dusts" >
+                <button mat-raised-button color="primary" class="m-1" (click)="deleteDust(dusts)">
+                  <mat-icon>delete_outline</mat-icon></button>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
-            <mat-row *matRowDef="let dusts; columns: displayedColumns1;"></mat-row>
+            <mat-row *matRowDef="let dusts; columns: displayedColumns1;"
+                     ></mat-row>
           </mat-table>
         </div>
         <!--<div fxFlex="50">
